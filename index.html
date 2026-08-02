@@ -329,10 +329,10 @@
   }
 
   /* acima do título — sempre centralizadas no próprio ponto */
-  .t1 { left: 12%; top: 3%; --rot: -6deg; animation-name: float-y-center; animation-duration: 6.5s; animation-delay: -1.2s; }
-  .t2 { left: 37%; top: 1%; --rot: 4deg;  animation-name: float-y-center; animation-duration: 7.2s; animation-delay: -3.4s; }
-  .t3 { left: 63%; top: 2%; --rot: -3deg; animation-name: float-y-center; animation-duration: 5.8s; animation-delay: -0.6s; }
-  .t4 { left: 88%; top: 5%; --rot: 5deg;  animation-name: float-y-center; animation-duration: 6.8s; animation-delay: -2.1s; }
+  .t1 { left: 12%; top: 8%;  --rot: -6deg; animation-name: float-y-center; animation-duration: 6.5s; animation-delay: -1.2s; }
+  .t2 { left: 37%; top: 6%;  --rot: 4deg;  animation-name: float-y-center; animation-duration: 7.2s; animation-delay: -3.4s; }
+  .t3 { left: 63%; top: 7%;  --rot: -3deg; animation-name: float-y-center; animation-duration: 5.8s; animation-delay: -0.6s; }
+  .t4 { left: 88%; top: 10%; --rot: 5deg;  animation-name: float-y-center; animation-duration: 6.8s; animation-delay: -2.1s; }
 
   /* abaixo do título — grupo centralizado */
   .t5 { left: 32%; bottom: 4%; --rot: 3deg;  animation-name: float-y-center; animation-duration: 6.4s; animation-delay: -2.8s; }
@@ -341,6 +341,10 @@
 
   @media (max-width: 960px) {
     .hero-thumb { width: clamp(62px, 21.6vw, 101px); }
+    .t1 { top: 16%; }
+    .t2 { top: 14%; }
+    .t3 { top: 15%; }
+    .t4 { top: 18%; }
     .t5 { left: 18%; }
     .t7 { left: 82%; }
   }
