@@ -63,16 +63,18 @@ export default async function ScriptDetailPage({ params }) {
       <main>
         <div className="wrap detail-wrap">
           <p className="eyebrow">{categoryLabel} — {script.origin}</p>
-          <h1 className="detail-title">{script.name}</h1>
+          <div className="detail-title-row">
+            <h1 className="detail-title">{script.name}</h1>
+            {script.is_paid && (
+              <span className="badge-group">
+                <span className="pill pill-premium"><span className="pill-star">★</span> Premium</span>
+                <span className="pill pill-no-key">Sem key</span>
+              </span>
+            )}
+          </div>
 
           <div className="detail-meta">
             <span className="pill pill-nova">Nova</span>
-            {script.is_paid && (
-              <>
-                <span className="pill pill-premium">Premium</span>
-                <span className="pill pill-no-key">Sem key</span>
-              </>
-            )}
             <span className="detail-tag">{script.tag}</span>
           </div>
 

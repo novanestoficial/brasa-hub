@@ -45,14 +45,16 @@ export default function CatalogGrid({ scripts }) {
                   width="480"
                   height="240"
                 />
+              </div>
+              <div className="card-name-row">
+                <span className="card-name">{script.name}</span>
                 {script.is_paid && (
-                  <div className="card-badges">
-                    <span className="pill pill-premium">Premium</span>
+                  <span className="badge-group">
+                    <span className="pill pill-premium"><span className="pill-star">★</span> Premium</span>
                     <span className="pill pill-no-key">Sem key</span>
-                  </div>
+                  </span>
                 )}
               </div>
-              <span className="card-name">{script.name}</span>
             </a>
           </article>
         ))}

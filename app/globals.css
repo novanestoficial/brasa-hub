@@ -592,17 +592,20 @@
     color: inherit;
   }
 
-  .card-link .card-name {
+  .card-link .card-name-row {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
     flex-grow: 1;
-    transition: color 0.15s ease;
   }
 
   .card-link:hover .card-name,
   .card-link:focus-visible .card-name {
     color: var(--flame);
   }
+
+  .card-name-row .card-name { transition: color 0.15s ease; }
 
   .card-cover-wrap {
     position: relative;
@@ -618,25 +621,38 @@
     border-bottom: 1px solid var(--line);
   }
 
-  .card-badges {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    display: flex;
-    gap: 6px;
-  }
+  .badge-group { display: flex; gap: 6px; flex-shrink: 0; }
 
   .pill-premium {
-    color: #1a1a1a;
-    border-color: rgba(210, 214, 222, 0.9);
-    background: linear-gradient(135deg, #f4f5f7, #c3c8d1 55%, #9aa0ac);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #2a2a2f;
+    border-color: rgba(226, 229, 235, 0.9);
+    background: linear-gradient(100deg, #9aa0ac 0%, #eef0f3 22%, #ffffff 38%, #eef0f3 54%, #9aa0ac 78%, #c3c8d1 100%);
+    background-size: 260% 100%;
+    animation: shine-silver 3.2s ease-in-out infinite;
     font-weight: 700;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    box-shadow: 0 2px 8px -2px rgba(180, 185, 195, 0.6);
+  }
+
+  .pill-star { font-size: 0.85em; line-height: 1; }
+
+  @keyframes shine-silver {
+    0% { background-position: 120% 0; }
+    100% { background-position: -120% 0; }
   }
 
   .pill-no-key {
-    color: #ffb347;
+    color: var(--flame);
     border-color: rgba(255, 107, 26, 0.55);
     background: rgba(255, 107, 26, 0.16);
+    font-weight: 700;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pill-premium { animation: none; }
   }
 
   .card-top {
@@ -720,6 +736,17 @@
     color: var(--text);
     text-wrap: balance;
   }
+
+  .detail-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .detail-title-row .detail-title { margin-bottom: 0; }
+  .detail-title-row .badge-group { margin-bottom: 20px; }
+  .detail-title-row .pill { font-size: 0.78rem; padding: 6px 13px; }
 
   .detail-meta {
     display: flex;
