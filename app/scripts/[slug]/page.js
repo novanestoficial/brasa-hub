@@ -71,6 +71,12 @@ export default async function ScriptDetailPage({ params }) {
                 <span className="pill pill-no-key">Sem key</span>
               </span>
             )}
+            {script.slug === "atherhub" && (
+              <span className="badge-group">
+                <span className="pill pill-gratis"><span className="pill-star">★</span> Grátis</span>
+                <span className="pill pill-com-key">Com key</span>
+              </span>
+            )}
           </div>
 
           <div className="detail-meta">

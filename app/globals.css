@@ -651,8 +651,29 @@
     font-weight: 700;
   }
 
+  .pill-gratis {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #0d3320;
+    border-color: rgba(190, 240, 210, 0.9);
+    background: linear-gradient(100deg, #16a34a 0%, #86efac 22%, #ecfdf3 38%, #86efac 54%, #16a34a 78%, #22c55e 100%);
+    background-size: 260% 100%;
+    animation: shine-silver 3.2s ease-in-out infinite;
+    font-weight: 700;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 8px -2px rgba(34, 197, 94, 0.5);
+  }
+
+  .pill-com-key {
+    color: var(--flame);
+    border-color: rgba(255, 107, 26, 0.55);
+    background: rgba(255, 107, 26, 0.16);
+    font-weight: 700;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .pill-premium { animation: none; }
+    .pill-premium, .pill-gratis { animation: none; }
   }
 
   .card-top {
