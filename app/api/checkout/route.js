@@ -21,6 +21,7 @@ export async function GET(request) {
     line_items: [{ price: process.env.STRIPE_PRICE_ID, quantity: 1 }],
     client_reference_id: user.id,
     customer_email: user.email,
+    allow_promotion_codes: true,
     success_url: `${origin}${next}?compra=ok`,
     cancel_url: `${origin}${next}`,
   });
