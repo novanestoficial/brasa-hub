@@ -5,7 +5,7 @@ export const metadata = {
 export default function LinksPage() {
   return (
     <>
-      <main>
+      <main className="links-main">
         <div className="links-card">
           <img className="links-avatar-img" src="/links-avatar.png" alt="" width="150" height="303" />
           <h1 className="links-name">CHARMANDER</h1>
@@ -65,7 +65,7 @@ export default function LinksPage() {
         </div>
       </main>
 
-      <footer>&copy; 2026 CHARMANDER SCRIPTS</footer>
+      <footer className="links-footer">&copy; 2026 CHARMANDER SCRIPTS</footer>
     </>
   );
 }

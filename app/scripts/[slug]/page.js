@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
-import { getSupabaseServerClient, getCoverUrl } from "../../../lib/supabase-server";
+import { getSupabaseServerClient, getCoverUrl } from "../../../lib/supabase/server";
 import CopyButton from "../../../components/CopyButton";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const supabase = getSupabaseServerClient();
+  const supabase = await getSupabaseServerClient();
   const { data: script } = await supabase
     .from("scripts")
     .select("name, meta_description")
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
 
 export default async function ScriptDetailPage({ params }) {
   const { slug } = await params;
-  const supabase = getSupabaseServerClient();
+  const supabase = await getSupabaseServerClient();
   const { data: script } = await supabase
     .from("scripts")
     .select("*")

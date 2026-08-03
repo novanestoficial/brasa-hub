@@ -1,5 +1,6 @@
-import { getSupabaseServerClient, getCoverUrl } from "../lib/supabase-server";
+import { getSupabaseServerClient, getCoverUrl } from "../lib/supabase/server";
 import CatalogGrid from "../components/CatalogGrid";
+import AuthNav from "../components/AuthNav";
 
 const HERO_IMAGES = [1, 2, 3, 4, 5, 6, 7].map((n) => ({
   src: `/hero/hero-${n}.jpg`,
@@ -7,7 +8,10 @@ const HERO_IMAGES = [1, 2, 3, 4, 5, 6, 7].map((n) => ({
 }));
 
 export default async function HomePage() {
-  const supabase = getSupabaseServerClient();
+  const supabase = await getSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const { data } = await supabase
     .from("scripts")
     .select("*")
@@ -30,6 +34,7 @@ export default async function HomePage() {
             <a href="#catalogo">Ver Scripts</a>
             <a href="/links">Links</a>
           </div>
+          <AuthNav user={user} />
           <div className="social-links">
             <a
               href="https://www.instagram.com/charmandersafado?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
