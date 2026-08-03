@@ -31,19 +31,21 @@ export default function AuthForm({ mode }) {
       router.push("/");
       router.refresh();
     } else {
-      const { error: signUpError } = await supabase.auth.signUp({
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
-        },
       });
       setSubmitting(false);
       if (signUpError) {
         setError(signUpError.message);
         return;
       }
-      setSignedUp(true);
+      if (!signUpData.session) {
+        setSignedUp(true);
+        return;
+      }
+      router.push("/");
+      router.refresh();
     }
   }
 

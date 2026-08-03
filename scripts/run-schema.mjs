@@ -12,14 +12,15 @@ if (!DATABASE_URL) {
   process.exit(1);
 }
 
-const sql = readFileSync(path.join(ROOT, "supabase", "schema.sql"), "utf-8");
+const file = process.argv[2] || "schema.sql";
+const sql = readFileSync(path.join(ROOT, "supabase", file), "utf-8");
 
 const client = new Client({ connectionString: DATABASE_URL, ssl: { rejectUnauthorized: false } });
 
 async function main() {
   await client.connect();
   await client.query(sql);
-  console.log("Schema aplicado com sucesso.");
+  console.log(`${file} aplicado com sucesso.`);
 }
 
 main()
