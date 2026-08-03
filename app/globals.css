@@ -737,6 +737,26 @@
   .detail-copy { width: 100%; }
   .btn-primary.copied { background: var(--flame); color: #1a0d05; }
 
+  /* ---------- paywall ---------- */
+  .paywall {
+    margin: 28px 0 16px;
+    padding: 28px 24px;
+    background: var(--surface-1);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .paywall p { color: var(--text-dim); margin: 0 0 18px; }
+
+  .paywall-price {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--flame) !important;
+    margin: 0 0 8px !important;
+  }
+
   /* ---------- auth pages ---------- */
   .auth-wrap { max-width: 420px; padding-top: 64px; padding-bottom: 96px; }
 

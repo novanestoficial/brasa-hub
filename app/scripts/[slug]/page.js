@@ -33,6 +33,21 @@ export default async function ScriptDetailPage({ params }) {
   const coverUrl = getCoverUrl(supabase, script.cover_path);
   const categoryLabel = script.categories.includes("desastre") ? "Desastre" : script.categories[0];
 
+  let hasAccess = !script.is_paid;
+  if (script.is_paid) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
+      const { data: purchase } = await supabase
+        .from("purchases")
+        .select("id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      hasAccess = !!purchase;
+    }
+  }
+
   return (
     <>
       <header className="site-header">
@@ -69,10 +84,22 @@ export default async function ScriptDetailPage({ params }) {
             height="270"
           />
 
-          <div className="code-block">
-            <code>{script.copy_command}</code>
-          </div>
-          <CopyButton command={script.copy_command} />
+          {hasAccess ? (
+            <>
+              <div className="code-block">
+                <code>{script.copy_command}</code>
+              </div>
+              <CopyButton command={script.copy_command} />
+            </>
+          ) : (
+            <div className="paywall">
+              <p className="paywall-price">R$ 9,99</p>
+              <p>Esse script faz parte do pacote pago. Libera de uma vez o Explhub NDS e o Script da Voadora.</p>
+              <a className="btn btn-primary auth-submit" href={`/api/checkout?next=/scripts/${slug}`}>
+                Comprar acesso
+              </a>
+            </div>
+          )}
         </div>
       </main>
 
