@@ -27,12 +27,17 @@ export default async function HomePage() {
       <header className="site-header">
         <a className="logo" href="#topo">
           <img className="logo-mark" src="/logo-mark.png" alt="" width="109" height="220" />
-          CHARMANDER<span className="logo-suffix"> SCRIPTS</span>
+          <span className="logo-text">CHARMANDER<span className="logo-suffix"> SCRIPTS</span></span>
         </a>
         <nav className="main-nav">
           <div className="nav-links">
-            <a href="#catalogo">Ver Scripts</a>
-            <a href="/links">Links</a>
+            <a href="#catalogo" className="nav-link-scripts">Ver Scripts</a>
+            <a href="/links" className="nav-link-links">
+              <svg className="nav-link-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9.5 14.5l5-5M10.5 8.5l.9-.9a3 3 0 1 1 4.2 4.2l-.9.9M13.5 15.5l-.9.9a3 3 0 1 1-4.2-4.2l.9-.9" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+              <span className="nav-link-text">Links</span>
+            </a>
           </div>
           <AuthNav user={user} />
           <div className="social-links">
