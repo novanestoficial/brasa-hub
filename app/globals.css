@@ -351,25 +351,64 @@
     50%      { transform: translateX(-50%) translateY(-32px) rotate(var(--rot, 0deg)) scale(1.04); }
   }
 
-  /* acima do título — sempre centralizadas no próprio ponto */
-  .t1 { left: 12%; top: 8%;  --rot: -6deg; animation-name: float-y-center; animation-duration: 6.5s; animation-delay: -1.2s; }
-  .t2 { left: 37%; top: 6%;  --rot: 4deg;  animation-name: float-y-center; animation-duration: 7.2s; animation-delay: -3.4s; }
-  .t3 { left: 63%; top: 7%;  --rot: -3deg; animation-name: float-y-center; animation-duration: 5.8s; animation-delay: -0.6s; }
-  .t4 { left: 88%; top: 10%; --rot: 5deg;  animation-name: float-y-center; animation-duration: 6.8s; animation-delay: -2.1s; }
-
-  /* abaixo do título — grupo centralizado */
-  .t5 { left: 32%; bottom: 4%; --rot: 3deg;  animation-name: float-y-center; animation-duration: 6.4s; animation-delay: -2.8s; }
-  .t6 { left: 50%; bottom: 4%; --rot: -2deg; animation-name: float-y-center; animation-duration: 7.5s; animation-delay: -1.5s; }
-  .t7 { left: 68%; bottom: 4%; --rot: 2deg;  animation-name: float-y-center; animation-duration: 6s;   animation-delay: -4s; }
+  /* composição espalhada: âncoras grandes na diagonal (t3/t5), médias de apoio (t1/t6),
+     pequenas como detalhe (t2/t4/t7) — nada alinhado em grade, tudo com respiro ao redor do texto */
+  .t1 {
+    left: 7%; top: 9%; --rot: -6deg;
+    width: clamp(150px, 18vw, 265px);
+    opacity: 0.85;
+    animation-name: float-y-center; animation-duration: 6.5s; animation-delay: -1.2s;
+  }
+  .t2 {
+    left: 28%; top: 2%; --rot: 5deg;
+    width: clamp(96px, 11.5vw, 175px);
+    opacity: 0.72;
+    box-shadow: 0 14px 28px -12px rgba(0, 0, 0, 0.55);
+    animation-name: float-y-center; animation-duration: 7.8s; animation-delay: -3.4s;
+  }
+  .t3 {
+    left: 91%; top: 5%; --rot: -4deg;
+    width: clamp(200px, 24vw, 360px);
+    opacity: 0.92;
+    box-shadow: 0 26px 50px -16px rgba(0, 0, 0, 0.72);
+    animation-name: float-y-center; animation-duration: 6s; animation-delay: -0.6s;
+  }
+  .t4 {
+    left: 95%; top: 46%; --rot: 6deg;
+    width: clamp(90px, 11vw, 165px);
+    opacity: 0.68;
+    box-shadow: 0 14px 28px -12px rgba(0, 0, 0, 0.55);
+    animation-name: float-y-center; animation-duration: 7.1s; animation-delay: -2.6s;
+  }
+  .t5 {
+    left: 8%; bottom: 5%; --rot: 4deg;
+    width: clamp(205px, 24vw, 360px);
+    opacity: 0.92;
+    box-shadow: 0 26px 50px -16px rgba(0, 0, 0, 0.72);
+    animation-name: float-y-center; animation-duration: 6.8s; animation-delay: -2.1s;
+  }
+  .t6 {
+    left: 47%; bottom: 3%; --rot: -3deg;
+    width: clamp(150px, 18vw, 265px);
+    opacity: 0.85;
+    animation-name: float-y-center; animation-duration: 7.4s; animation-delay: -1.6s;
+  }
+  .t7 {
+    left: 88%; bottom: 14%; --rot: 3deg;
+    width: clamp(98px, 11.5vw, 178px);
+    opacity: 0.72;
+    box-shadow: 0 14px 28px -12px rgba(0, 0, 0, 0.55);
+    animation-name: float-y-center; animation-duration: 6.3s; animation-delay: -4s;
+  }
 
   @media (max-width: 960px) {
-    .hero-thumb { width: clamp(62px, 21.6vw, 101px); }
-    .t1 { top: 16%; }
-    .t2 { top: 14%; }
-    .t3 { top: 15%; }
-    .t4 { top: 18%; }
-    .t5 { left: 18%; }
-    .t7 { left: 82%; }
+    .t1 { left: 12%; top: 15%; width: clamp(78px, 24vw, 120px); }
+    .t2 { left: 30%; top: 6%;  width: clamp(58px, 17vw, 90px); }
+    .t3 { left: 88%; top: 12%; width: clamp(95px, 28vw, 145px); }
+    .t4 { left: 92%; top: 46%; width: clamp(52px, 16vw, 82px); }
+    .t5 { left: 14%; bottom: 6%;  width: clamp(95px, 28vw, 145px); }
+    .t6 { left: 50%; bottom: 3%;  width: clamp(75px, 23vw, 115px); }
+    .t7 { left: 84%; bottom: 16%; width: clamp(58px, 17vw, 90px); }
   }
 
   .eyebrow {
