@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getSupabaseServerClient, getCoverUrl } from "../../../lib/supabase/server";
 import CopyButton from "../../../components/CopyButton";
+import ScriptBadges from "../../../components/ScriptBadges";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -65,18 +66,7 @@ export default async function ScriptDetailPage({ params }) {
           <p className="eyebrow">{categoryLabel} — {script.origin}</p>
           <div className="detail-title-row">
             <h1 className="detail-title">{script.name}</h1>
-            {script.is_paid && (
-              <span className="badge-group">
-                <span className="pill pill-premium"><span className="pill-star">★</span> Premium</span>
-                <span className="pill pill-no-key">Sem key</span>
-              </span>
-            )}
-            {script.slug === "atherhub" && (
-              <span className="badge-group">
-                <span className="pill pill-gratis"><span className="pill-star">★</span> Grátis</span>
-                <span className="pill pill-com-key">Com key</span>
-              </span>
-            )}
+            <ScriptBadges script={script} />
           </div>
 
           <div className="detail-meta">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ScriptBadges from "./ScriptBadges";
 
 const FILTERS = [
   { filter: "todos", label: "Todos", featured: false },
@@ -48,18 +49,7 @@ export default function CatalogGrid({ scripts }) {
               </div>
               <div className="card-name-row">
                 <span className="card-name">{script.name}</span>
-                {script.is_paid && (
-                  <span className="badge-group">
-                    <span className="pill pill-premium"><span className="pill-star">★</span> Premium</span>
-                    <span className="pill pill-no-key">Sem key</span>
-                  </span>
-                )}
-                {script.slug === "atherhub" && (
-                  <span className="badge-group">
-                    <span className="pill pill-gratis"><span className="pill-star">★</span> Grátis</span>
-                    <span className="pill pill-com-key">Com key</span>
-                  </span>
-                )}
+                <ScriptBadges script={script} />
               </div>
             </a>
           </article>
