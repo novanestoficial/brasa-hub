@@ -788,6 +788,33 @@
     line-height: 1.6;
   }
 
+  .auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 4px 0;
+  }
+
+  .auth-divider::before, .auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .btn-google {
+    width: 100%;
+    background: var(--text);
+    color: #180f08;
+    font-weight: 600;
+  }
+
+  .btn-google:hover { transform: translateY(-2px); }
+
   .auth-switch {
     margin-top: 24px;
     font-family: var(--font-mono);

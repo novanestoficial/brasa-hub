@@ -12,6 +12,14 @@ export default function AuthForm({ mode }) {
   const [submitting, setSubmitting] = useState(false);
   const [signedUp, setSignedUp] = useState(false);
 
+  async function handleGoogleLogin() {
+    const supabase = getSupabaseBrowserClient();
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
+    });
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -88,6 +96,15 @@ export default function AuthForm({ mode }) {
 
       <button className="btn btn-primary auth-submit" type="submit" disabled={submitting}>
         {submitting ? "Aguenta aí..." : mode === "login" ? "Entrar" : "Criar conta"}
+      </button>
+
+      <div className="auth-divider">ou</div>
+
+      <button type="button" className="btn btn-google" onClick={handleGoogleLogin}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
+          <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.3-1.7 3.8-5.5 3.8-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.2.8 3.9 1.5l2.7-2.6C16.9 3 14.7 2 12 2 6.9 2 2.7 6.1 2.7 11.2S6.9 20.4 12 20.4c6.9 0 8.9-4.8 8.9-7.3 0-.5 0-.9-.1-1.3H12z"/>
+        </svg>
+        Continuar com Google
       </button>
     </form>
   );
