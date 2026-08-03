@@ -105,7 +105,7 @@ export default async function ScriptDetailPage({ params }) {
             </>
           ) : (
             <div className="paywall">
-              <p className="paywall-price">R$ 9,99</p>
+              <p className="paywall-price">R$ 4,99</p>
               <p>Esse script faz parte do pacote pago. Libera de uma vez o Explhub NDS e o Script da Voadora.</p>
               <a className="btn btn-primary auth-submit" href={`/api/checkout?next=/scripts/${slug}`}>
                 Comprar acesso
