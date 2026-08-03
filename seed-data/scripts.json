@@ -1,0 +1,100 @@
+[
+  {
+    "slug": "atherhub",
+    "name": "Atherhub | 25+ Jogos | OP, Indetectável e Grátis",
+    "tag": "Lua · Luarmor",
+    "description": "Hub com scripts pra mais de 25 jogos do Roblox, sempre indetectável e sem custo nenhum.",
+    "copy_command": "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v3/loaders/2529a5f9dfddd5523ca4e22f21cceffa.lua\"))()",
+    "cover_filename": "atherhub.webp",
+    "cover_mime": "image/webp",
+    "categories": [
+      "desastre"
+    ],
+    "is_paid": false,
+    "origin": "script externo",
+    "sort_order": 1,
+    "meta_description": "Atherhub — script pra mais de 25 jogos do Roblox, sempre indetectável e de graça."
+  },
+  {
+    "slug": "zama-ring-v8",
+    "name": "ZAMA RING V8",
+    "tag": "Lua · GitHub Raw",
+    "description": "Faz os objetos serem atraídos e gera um tornado gigante.",
+    "copy_command": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Jotarokujo749/Zamasuhub1/refs/heads/main/zamaringv8.lua\"))()",
+    "cover_filename": "zama-ring-v8.jpg",
+    "cover_mime": "image/jpeg",
+    "categories": [
+      "desastre"
+    ],
+    "is_paid": false,
+    "origin": "script pessoal",
+    "sort_order": 2,
+    "meta_description": "Zama Ring V8 — atrai objetos e gera um tornado gigante."
+  },
+  {
+    "slug": "dropkick",
+    "name": "SCRIPT DA VOADORA",
+    "tag": "Lua · RawScripts",
+    "description": "Uso nos vídeos pra dar voadora, soco e chute, e isolar as coisas — tipo o foguete, kkkk.",
+    "copy_command": "loadstring(game:HttpGet(\"https://rawscripts.net/raw/Universal-Script-THE-REAL-dropkick-177199\"))()",
+    "cover_filename": "dropkick.jpg",
+    "cover_mime": "image/jpeg",
+    "categories": [
+      "desastre",
+      "gravar"
+    ],
+    "is_paid": true,
+    "origin": "script pessoal",
+    "sort_order": 3,
+    "meta_description": "The Real Drop Kick — dá voadora, soco e chute, e isola qualquer coisa no mapa."
+  },
+  {
+    "slug": "explhub",
+    "name": "EXPLHUB NDS",
+    "tag": "Lua · Pastefy",
+    "description": "Script completo com velocidade, pulo infinito, marcar de vermelho, FPS boost e vários outros scripts dentro dele — sem dúvidas o melhor que uso.",
+    "copy_command": "loadstring(game:HttpGet(\"https://pastefy.app/kTBvy5cu/raw\"))()",
+    "cover_filename": "explhub.jpg",
+    "cover_mime": "image/jpeg",
+    "categories": [
+      "desastre",
+      "gravar"
+    ],
+    "is_paid": true,
+    "origin": "script pessoal",
+    "sort_order": 4,
+    "meta_description": "Explhub — velocidade, pulo infinito, ESP e FPS boost num hub só."
+  },
+  {
+    "slug": "azul-voadora",
+    "name": "SCRIPT AZUL VOADORA",
+    "tag": "Lua · Pastebin",
+    "description": "Serve pra dar chutes, voadora, isolar, velocidade, anti dano, anti fling e etc.",
+    "copy_command": "loadstring(game:HttpGet(\"https://pastebin.com/raw/8XCgheRD\"))()",
+    "cover_filename": "azul-voadora.jpg",
+    "cover_mime": "image/jpeg",
+    "categories": [
+      "desastre"
+    ],
+    "is_paid": false,
+    "origin": "script pessoal",
+    "sort_order": 5,
+    "meta_description": "Script Azul Voadora — chutes, voadora, anti dano e anti fling."
+  },
+  {
+    "slug": "script-de-voar",
+    "name": "SCRIPT DE VOAR",
+    "tag": "Lua · GitHub Raw",
+    "description": "Deixa voar livremente pelo mapa.",
+    "copy_command": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Jotarokujo749/Zamasuhub1/refs/heads/main/zamaringv8.lua\"))()",
+    "cover_filename": "script-de-voar.jpg",
+    "cover_mime": "image/jpeg",
+    "categories": [
+      "desastre"
+    ],
+    "is_paid": false,
+    "origin": "script pessoal",
+    "sort_order": 6,
+    "meta_description": "Script de Voar — deixa voar livremente pelo mapa."
+  }
+]

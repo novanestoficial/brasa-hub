@@ -1,0 +1,37 @@
+[
+  {
+    "filename": "hero-1.jpg",
+    "position_class": "t1",
+    "alt": ""
+  },
+  {
+    "filename": "hero-2.jpg",
+    "position_class": "t2",
+    "alt": ""
+  },
+  {
+    "filename": "hero-3.jpg",
+    "position_class": "t3",
+    "alt": ""
+  },
+  {
+    "filename": "hero-4.jpg",
+    "position_class": "t4",
+    "alt": ""
+  },
+  {
+    "filename": "hero-5.jpg",
+    "position_class": "t5",
+    "alt": ""
+  },
+  {
+    "filename": "hero-6.jpg",
+    "position_class": "t6",
+    "alt": ""
+  },
+  {
+    "filename": "hero-7.jpg",
+    "position_class": "t7",
+    "alt": ""
+  }
+]
