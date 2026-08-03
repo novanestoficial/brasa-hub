@@ -67,6 +67,12 @@ export default async function ScriptDetailPage({ params }) {
 
           <div className="detail-meta">
             <span className="pill pill-nova">Nova</span>
+            {script.is_paid && (
+              <>
+                <span className="pill pill-premium">Premium</span>
+                <span className="pill pill-no-key">Sem key</span>
+              </>
+            )}
             <span className="detail-tag">{script.tag}</span>
           </div>
 

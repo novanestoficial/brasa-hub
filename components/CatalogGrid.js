@@ -35,15 +35,23 @@ export default function CatalogGrid({ scripts }) {
         {visible.map((script) => (
           <article className="card card-simple" key={script.slug}>
             <a className="card-link" href={`/scripts/${script.slug}`}>
-              <img
-                className="card-cover"
-                src={script.coverUrl}
-                alt={script.name}
-                loading="lazy"
-                decoding="async"
-                width="480"
-                height="240"
-              />
+              <div className="card-cover-wrap">
+                <img
+                  className="card-cover"
+                  src={script.coverUrl}
+                  alt={script.name}
+                  loading="lazy"
+                  decoding="async"
+                  width="480"
+                  height="240"
+                />
+                {script.is_paid && (
+                  <div className="card-badges">
+                    <span className="pill pill-premium">Premium</span>
+                    <span className="pill pill-no-key">Sem key</span>
+                  </div>
+                )}
+              </div>
               <span className="card-name">{script.name}</span>
             </a>
           </article>

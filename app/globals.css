@@ -544,12 +544,12 @@
   .filter-pill-featured {
     background: linear-gradient(135deg, var(--ember), var(--magma));
     border-color: var(--ember);
-    color: #180f08;
+    color: #fff;
     font-weight: 700;
     box-shadow: 0 4px 18px -6px rgba(255, 107, 26, 0.6);
   }
 
-  .filter-pill-featured:hover { color: #180f08; }
+  .filter-pill-featured:hover { color: #fff; }
 
   .filter-pill-featured[aria-pressed="true"] {
     background: linear-gradient(135deg, var(--flame), var(--ember));
@@ -604,13 +604,39 @@
     color: var(--flame);
   }
 
-  .card-cover {
-    display: block;
+  .card-cover-wrap {
+    position: relative;
     width: calc(100% + 52px);
     margin: -26px -26px 0;
+  }
+
+  .card-cover {
+    display: block;
+    width: 100%;
     aspect-ratio: 16 / 8;
     object-fit: cover;
     border-bottom: 1px solid var(--line);
+  }
+
+  .card-badges {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 6px;
+  }
+
+  .pill-premium {
+    color: #1a1a1a;
+    border-color: rgba(210, 214, 222, 0.9);
+    background: linear-gradient(135deg, #f4f5f7, #c3c8d1 55%, #9aa0ac);
+    font-weight: 700;
+  }
+
+  .pill-no-key {
+    color: #ffb347;
+    border-color: rgba(255, 107, 26, 0.55);
+    background: rgba(255, 107, 26, 0.16);
   }
 
   .card-top {
