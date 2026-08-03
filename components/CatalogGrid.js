@@ -46,6 +46,8 @@ export default function CatalogGrid({ scripts }) {
                   width="480"
                   height="240"
                 />
+                <span className="stats-overlay stat-views">👁 {script.views}</span>
+                <span className="stats-overlay stat-likes">👍 {script.likes}</span>
               </div>
               <div className="card-name-row">
                 <span className="card-name">{script.name}</span>

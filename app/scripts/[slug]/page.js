@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getSupabaseServerClient, getCoverUrl } from "../../../lib/supabase/server";
 import CopyButton from "../../../components/CopyButton";
 import ScriptBadges from "../../../components/ScriptBadges";
+import LikeButton from "../../../components/LikeButton";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -30,6 +31,9 @@ export default async function ScriptDetailPage({ params }) {
     .single();
 
   if (!script) notFound();
+
+  await supabase.rpc("increment_views", { p_slug: slug });
+  const views = script.views + 1;
 
   const coverUrl = getCoverUrl(supabase, script.cover_path);
   const categoryLabel = script.categories.includes("desastre") ? "Desastre" : script.categories[0];
@@ -78,15 +82,19 @@ export default async function ScriptDetailPage({ params }) {
             <p>{script.description}</p>
           </div>
 
-          <img
-            className="detail-cover"
-            src={coverUrl}
-            alt={script.name}
-            loading="lazy"
-            decoding="async"
-            width="480"
-            height="270"
-          />
+          <div className="detail-cover-wrap">
+            <img
+              className="detail-cover"
+              src={coverUrl}
+              alt={script.name}
+              loading="lazy"
+              decoding="async"
+              width="480"
+              height="270"
+            />
+            <span className="stats-overlay stat-views">👁 {views}</span>
+            <LikeButton slug={slug} initialLikes={script.likes} />
+          </div>
 
           {hasAccess ? (
             <>
