@@ -109,6 +109,8 @@ export default async function HomePage() {
             </div>
 
             <CatalogGrid scripts={scripts} />
+
+            <p className="coming-soon">🔥 Mais scripts chegando em breve — fica de olho.</p>
           </div>
         </section>
       </main>

@@ -563,6 +563,17 @@
     gap: 22px;
   }
 
+  .coming-soon {
+    margin: 40px 0 0;
+    padding: 20px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    border: 1px dashed var(--line-strong);
+    border-radius: 8px;
+  }
+
   .card {
     position: relative;
     display: flex;
