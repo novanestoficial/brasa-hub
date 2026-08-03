@@ -1098,7 +1098,7 @@
 
   .link-item.primary {
     background: linear-gradient(135deg, var(--ember), var(--magma));
-    color: #180f08;
+    color: #fff;
     border-color: transparent;
     font-weight: 700;
     box-shadow: 0 4px 18px -6px rgba(255, 107, 26, 0.6);

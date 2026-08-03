@@ -59,7 +59,7 @@ export default function LinksPage() {
                 <rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" strokeWidth="1.8" />
                 <path d="M7 9h10M7 13h6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
               </svg>
-              Hub de Scripts
+              Charmander HUB - SCRIPTS
             </a>
           </div>
         </div>
