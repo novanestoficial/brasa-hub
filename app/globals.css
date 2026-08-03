@@ -1104,7 +1104,7 @@
     box-shadow: 0 4px 18px -6px rgba(255, 107, 26, 0.6);
   }
 
-  .link-item.primary svg { color: #180f08; }
+  .link-item.primary svg { color: var(--flame); filter: drop-shadow(0 0 6px rgba(255, 179, 71, 0.8)); }
 
   .link-item.primary:hover {
     box-shadow: 0 16px 34px -14px rgba(255, 107, 26, 0.8);
