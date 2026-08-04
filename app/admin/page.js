@@ -51,7 +51,18 @@ export default async function AdminPage() {
     .slice(0, 10);
 
   return (
-    <main>
+    <>
+      <header className="site-header">
+        <a className="logo" href="/">
+          CHARMANDER<span className="logo-suffix"> SCRIPTS</span>
+        </a>
+        <a className="btn btn-ghost" href="/">
+          <span className="back-full">&larr; Voltar ao site</span>
+          <span className="back-short">&larr; Voltar</span>
+        </a>
+      </header>
+
+      <main>
       <div className="wrap admin-wrap">
         <p className="eyebrow">Admin</p>
         <h1 className="detail-title">Painel</h1>
@@ -146,6 +157,7 @@ export default async function AdminPage() {
           )}
         </section>
       </div>
-    </main>
+      </main>
+    </>
   );
 }
