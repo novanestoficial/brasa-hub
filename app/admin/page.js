@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import { getSupabaseServerClient } from "../../lib/supabase/server";
 import { getSupabaseAdminClient } from "../../lib/supabase/admin";
-
-const ADMIN_EMAIL = "davidcamposoliveira80@gmail.com";
+import { ADMIN_EMAIL } from "../../lib/admin";
 
 export const metadata = {
   title: "Admin — CHARMANDER SCRIPTS",

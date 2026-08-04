@@ -1,6 +1,7 @@
 import { getSupabaseServerClient, getCoverUrl } from "../lib/supabase/server";
 import CatalogGrid from "../components/CatalogGrid";
 import AuthNav from "../components/AuthNav";
+import { ADMIN_EMAIL } from "../lib/admin";
 
 const HERO_IMAGES = [1, 2, 3, 4, 5, 6, 7].map((n) => ({
   src: `/hero/hero-${n}.jpg`,
@@ -12,6 +13,7 @@ export default async function HomePage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  const isAdmin = user?.email === ADMIN_EMAIL;
   const { data } = await supabase
     .from("scripts")
     .select("*")
@@ -39,7 +41,7 @@ export default async function HomePage() {
               <span className="nav-link-text">Links</span>
             </a>
           </div>
-          <AuthNav user={user} />
+          <AuthNav user={user} isAdmin={isAdmin} />
           <div className="social-links">
             <a
               href="https://www.instagram.com/charmandersafado?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="

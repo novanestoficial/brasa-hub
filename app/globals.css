@@ -189,7 +189,7 @@
 
   .auth-nav { display: flex; align-items: center; gap: 14px; }
 
-  .auth-login, .auth-logout { display: flex; align-items: center; gap: 6px; }
+  .auth-login, .auth-logout, .auth-admin { display: flex; align-items: center; gap: 6px; }
   .auth-icon { display: none; width: 18px; height: 18px; flex-shrink: 0; }
 
   .auth-email {
@@ -216,18 +216,29 @@
 
   .auth-logout:hover { color: var(--flame); }
 
+  .auth-admin {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--flame);
+  }
+
+  .auth-admin:hover { color: var(--text); }
+
   @media (max-width: 720px) {
     .auth-email { display: none; }
     .auth-nav-text { display: none; }
     .auth-icon { display: block; }
-    .auth-login, .auth-logout {
+    .auth-login, .auth-logout, .auth-admin {
       padding: 6px;
       min-width: 36px;
       min-height: 36px;
       justify-content: center;
       border-radius: 999px;
     }
-    .auth-login:hover, .auth-logout:hover { background: rgba(255, 107, 26, 0.12); }
+    .auth-login:hover, .auth-logout:hover, .auth-admin:hover { background: rgba(255, 107, 26, 0.12); }
   }
 
   .social-links { display: flex; align-items: center; gap: 16px; }
