@@ -1,3 +1,6 @@
+import dns from "node:dns";
+dns.setDefaultResultOrder("ipv4first");
+
 import { Client } from "pg";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
