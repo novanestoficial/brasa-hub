@@ -1,6 +1,7 @@
 import { getSupabaseServerClient, getCoverUrl } from "../lib/supabase/server";
 import CatalogGrid from "../components/CatalogGrid";
 import AuthNav from "../components/AuthNav";
+import BundleCtaButton from "../components/BundleCtaButton";
 import { ADMIN_EMAIL } from "../lib/admin";
 
 const HERO_IMAGES = [1, 2, 3, 4, 5, 6, 7].map((n) => ({
@@ -124,9 +125,7 @@ export default async function HomePage() {
                   </article>
                 ))}
               </div>
-              <a className="btn btn-primary bundle-cta" href="/api/checkout?next=/">
-                Quero os 2 agora
-              </a>
+              <BundleCtaButton href="/api/checkout?next=/">Quero os 2 agora</BundleCtaButton>
             </div>
           </section>
         )}

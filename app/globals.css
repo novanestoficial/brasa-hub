@@ -671,14 +671,14 @@
   .bundle-cards .card:nth-child(1) {
     left: -20px;
     z-index: 1;
-    animation: bundle-card-in-1 0.5s ease forwards;
+    animation: bundle-card-in-1 0.5s ease forwards, bundle-card-peek-back 4.5s ease-in-out 0.7s infinite;
   }
 
   .bundle-cards .card:nth-child(2) {
     left: 44px;
     top: 18px;
     z-index: 2;
-    animation: bundle-card-in-2 0.5s ease 0.12s forwards, bundle-card-peek 4.5s ease-in-out 0.7s infinite;
+    animation: bundle-card-in-2 0.5s ease 0.12s forwards, bundle-card-peek-front 4.5s ease-in-out 0.7s infinite;
   }
 
   @keyframes bundle-card-in-1 {
@@ -691,9 +691,14 @@
     to { opacity: 1; transform: translateY(0) rotate(5deg); }
   }
 
-  @keyframes bundle-card-peek {
+  @keyframes bundle-card-peek-front {
     0%, 18%, 100% { transform: rotate(5deg) translate(0, 0); }
     50% { transform: rotate(7deg) translate(26px, -10px); }
+  }
+
+  @keyframes bundle-card-peek-back {
+    0%, 18%, 100% { transform: rotate(-6deg) translate(0, 0); }
+    50% { transform: rotate(-8deg) translate(-26px, -10px); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -710,6 +715,25 @@
     max-width: 340px;
     margin: 0 auto;
     font-size: 0.95rem;
+    overflow: hidden;
+    --mx: 50%;
+    --my: 50%;
+  }
+
+  .bundle-cta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.35), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  .bundle-cta:hover::after { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bundle-cta::after { transition: none; }
   }
 
   .coming-soon {
