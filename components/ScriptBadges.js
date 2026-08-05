@@ -1,5 +1,5 @@
 export default function ScriptBadges({ script }) {
-  const hasKey = script.slug === "atherhub";
+  const hasKey = script.has_key;
 
   if (script.is_paid) {
     return (
