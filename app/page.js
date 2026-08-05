@@ -24,6 +24,20 @@ export default async function HomePage() {
     coverUrl: getCoverUrl(supabase, script.cover_path),
   }));
 
+  let hasBundleAccess = false;
+  if (user) {
+    const { data: purchase } = await supabase
+      .from("purchases")
+      .select("id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    hasBundleAccess = !!purchase;
+  }
+
+  const bundleScripts = ["explhub", "dropkick"]
+    .map((slug) => scripts.find((s) => s.slug === slug))
+    .filter(Boolean);
+
   return (
     <>
       <header className="site-header">
@@ -105,6 +119,42 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        {!hasBundleAccess && bundleScripts.length === 2 && (
+          <section className="bundle-promo">
+            <div className="wrap">
+              <div className="bundle-card">
+                <span className="bundle-badge">🔥 Oferta por tempo limitado</span>
+                <h2 className="bundle-title">Os 2 scripts que eu uso pra gravar</h2>
+                <p className="bundle-subtitle">
+                  Explhub NDS + Script da Voadora — premium, sem key, liberados na hora. É literalmente o que eu uso em todo vídeo.
+                </p>
+
+                <div className="bundle-items">
+                  <div className="bundle-item">
+                    <img src={bundleScripts[0].coverUrl} alt={bundleScripts[0].name} loading="lazy" decoding="async" />
+                    <span>{bundleScripts[0].name}</span>
+                  </div>
+                  <span className="bundle-plus" aria-hidden="true">+</span>
+                  <div className="bundle-item">
+                    <img src={bundleScripts[1].coverUrl} alt={bundleScripts[1].name} loading="lazy" decoding="async" />
+                    <span>{bundleScripts[1].name}</span>
+                  </div>
+                </div>
+
+                <div className="bundle-price-row">
+                  <span className="bundle-price-old">R$ 10,99</span>
+                  <span className="bundle-price-new">R$ 4,99</span>
+                </div>
+
+                <a className="btn btn-primary bundle-cta" href="/api/checkout?next=/">
+                  Quero os 2 agora
+                </a>
+                <p className="bundle-note">Pagamento seguro via Stripe · Acesso liberado na hora</p>
+              </div>
+            </div>
+          </section>
+        )}
 
         <section id="catalogo">
           <div className="wrap">
