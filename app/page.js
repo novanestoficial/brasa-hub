@@ -125,7 +125,7 @@ export default async function HomePage() {
                 ))}
               </div>
               <a className="btn btn-primary bundle-cta" href="/api/checkout?next=/">
-                Comprar os 2 por R$ 4,99
+                Quero os 2 agora
               </a>
             </div>
           </section>
