@@ -655,17 +655,15 @@
 
   .bundle-cards {
     position: relative;
-    width: 240px;
-    height: 230px;
-    margin: 0 auto 32px;
+    width: 280px;
+    height: 340px;
+    margin: 0 auto 40px;
   }
 
   .bundle-cards .card {
     position: absolute;
     top: 0;
     width: 200px;
-    padding: 16px;
-    gap: 10px;
     min-height: 0;
     opacity: 0;
   }
@@ -677,7 +675,8 @@
   }
 
   .bundle-cards .card:nth-child(2) {
-    left: 20px;
+    left: 44px;
+    top: 18px;
     z-index: 2;
     animation: bundle-card-in-2 0.5s ease 0.12s forwards, bundle-card-peek 4.5s ease-in-out 0.7s infinite;
   }
@@ -704,6 +703,8 @@
   }
 
   .bundle-cta {
+    position: relative;
+    z-index: 3;
     display: flex;
     width: 100%;
     max-width: 340px;
