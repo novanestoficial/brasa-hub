@@ -648,6 +648,7 @@
 
   /* ---------- bundle promo (featured upsell) ---------- */
   .bundle-promo { padding: 0 clamp(20px, 6vw, 48px) 64px; }
+  .bundle-promo-top { padding-top: clamp(32px, 6vw, 56px); position: relative; z-index: 2; }
 
   .bundle-card {
     position: relative;
