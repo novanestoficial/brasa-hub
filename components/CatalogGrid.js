@@ -7,6 +7,7 @@ const FILTERS = [
   { filter: "todos", label: "Todos", featured: false },
   { filter: "desastre", label: "Desastre", featured: false },
   { filter: "universal", label: "Universal", featured: false },
+  { filter: "blox-fruits", label: "Blox Fruits", featured: false },
   { filter: "gravar", label: "🎥 Scripts que uso pra gravar", featured: true },
 ];
 
