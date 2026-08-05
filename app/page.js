@@ -130,7 +130,7 @@ export default async function HomePage() {
           </section>
         )}
 
-        <section className="hero">
+        <section className={!hasBundleAccess && bundleScripts.length === 2 ? "hero hero-compact" : "hero"}>
           <div className="hero-thumbs" aria-hidden="true">
             {HERO_IMAGES.map((img) => (
               <img
