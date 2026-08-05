@@ -648,7 +648,7 @@
 
   /* ---------- bundle promo (featured upsell) ---------- */
   .bundle-promo-top {
-    padding: clamp(28px, 5vw, 40px) clamp(20px, 6vw, 48px) 8px;
+    padding: clamp(64px, 10vw, 96px) clamp(20px, 6vw, 48px) 8px;
     position: relative;
     z-index: 2;
   }
