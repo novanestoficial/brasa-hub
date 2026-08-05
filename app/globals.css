@@ -653,8 +653,8 @@
   }
 
   .hero-compact {
-    min-height: 60vh;
-    padding-top: clamp(16px, 3vw, 32px);
+    min-height: 80vh;
+    padding-top: clamp(56px, 7vw, 88px);
     padding-bottom: 60px;
   }
 
