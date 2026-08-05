@@ -48,7 +48,6 @@ export default async function HomePage() {
         </a>
         <nav className="main-nav">
           <div className="nav-links">
-            <a href="#catalogo" className="nav-link-scripts">Ver Scripts</a>
             <a href="/links" className="nav-link-links">
               <svg className="nav-link-icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M9.5 14.5l5-5M10.5 8.5l.9-.9a3 3 0 1 1 4.2 4.2l-.9.9M13.5 15.5l-.9.9a3 3 0 1 1-4.2-4.2l.9-.9" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -95,7 +94,6 @@ export default async function HomePage() {
               </svg>
             </a>
           </div>
-          <a className="btn btn-ghost" href="#catalogo">Ver scripts</a>
         </nav>
       </header>
 
