@@ -98,8 +98,29 @@ export default async function HomePage() {
       </header>
 
       <main id="topo">
+        <section className="hero">
+          <div className="hero-thumbs" aria-hidden="true">
+            {HERO_IMAGES.map((img) => (
+              <img
+                key={img.src}
+                className={`hero-thumb ${img.positionClass}`}
+                src={img.src}
+                alt=""
+              />
+            ))}
+          </div>
+          <div className="hero-content">
+            <p className="eyebrow">Hub de scripts &mdash; acesso direto</p>
+            <h1>CHARMANDER SCRIPTS</h1>
+            <p className="lede">Scripts que eu uso para gravar os vídeos</p>
+            <div className="hero-ctas">
+              <a className="btn btn-primary" href="#catalogo">Ver scripts</a>
+            </div>
+          </div>
+        </section>
+
         {!hasBundleAccess && bundleScripts.length === 2 && (
-          <section className="bundle-promo-top">
+          <div className="featured-cards">
             <div className="wrap">
               <div className="bundle-cards">
                 {bundleScripts.map((s) => (
@@ -125,29 +146,8 @@ export default async function HomePage() {
               </div>
               <BundleCtaButton href="/api/checkout?next=/">Quero os 2 agora</BundleCtaButton>
             </div>
-          </section>
+          </div>
         )}
-
-        <section className={!hasBundleAccess && bundleScripts.length === 2 ? "hero hero-compact" : "hero"}>
-          <div className="hero-thumbs" aria-hidden="true">
-            {HERO_IMAGES.map((img) => (
-              <img
-                key={img.src}
-                className={`hero-thumb ${img.positionClass}`}
-                src={img.src}
-                alt=""
-              />
-            ))}
-          </div>
-          <div className="hero-content">
-            <p className="eyebrow">Hub de scripts &mdash; acesso direto</p>
-            <h1>CHARMANDER SCRIPTS</h1>
-            <p className="lede">Scripts que eu uso para gravar os vídeos</p>
-            <div className="hero-ctas">
-              <a className="btn btn-primary" href="#catalogo">Ver scripts</a>
-            </div>
-          </div>
-        </section>
 
         <section id="catalogo">
           <div className="wrap">

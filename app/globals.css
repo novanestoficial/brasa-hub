@@ -646,16 +646,8 @@
   }
 
   /* ---------- bundle promo (featured upsell) ---------- */
-  .bundle-promo-top {
-    padding: clamp(56px, 8vw, 88px) clamp(20px, 6vw, 48px) 8px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-compact {
-    min-height: 80vh;
-    padding-top: clamp(56px, 7vw, 88px);
-    padding-bottom: 60px;
+  .featured-cards {
+    padding: clamp(40px, 6vw, 64px) clamp(20px, 6vw, 48px) clamp(28px, 5vw, 44px);
   }
 
   .bundle-cards {
