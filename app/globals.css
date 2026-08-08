@@ -1274,6 +1274,18 @@
     opacity: 0;
   }
 
+  /* nome de uma linha só: numa carta estreita do deck, "SCRIPT DA VOADORA" quebrava
+     em 2 linhas e empurrava a carta pra fora da altura fixa do container, cobrindo
+     o texto da oferta logo abaixo */
+  .bundle-cards .card-name-row { flex-wrap: nowrap; }
+
+  .bundle-cards .card-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: normal;
+  }
+
   .bundle-cards .card:nth-child(1) {
     left: -20px;
     z-index: 1;
