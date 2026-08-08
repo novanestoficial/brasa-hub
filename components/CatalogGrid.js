@@ -11,7 +11,19 @@ const FILTERS = [
   { filter: "gravar", label: "🎥 Scripts que uso pra gravar", featured: true },
 ];
 
-export default function CatalogGrid({ scripts }) {
+function LockBadge() {
+  return (
+    <span className="card-lock" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="10.5" width="16" height="10.5" rx="2.5" />
+        <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" />
+      </svg>
+      Entrar
+    </span>
+  );
+}
+
+export default function CatalogGrid({ scripts, locked = false }) {
   const [activeFilter, setActiveFilter] = useState("todos");
 
   const visible = scripts.filter(
@@ -48,6 +60,7 @@ export default function CatalogGrid({ scripts }) {
                   width="480"
                   height="240"
                 />
+                {locked && <LockBadge />}
                 <span className="stats-overlay stat-views">👁 {script.views}</span>
                 <span className="stats-overlay stat-likes">👍 {script.likes}</span>
               </div>

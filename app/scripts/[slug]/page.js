@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getSupabaseServerClient, getCoverUrl } from "../../../lib/supabase/server";
 import CopyButton from "../../../components/CopyButton";
 import ScriptBadges from "../../../components/ScriptBadges";
@@ -32,6 +32,14 @@ export default async function ScriptDetailPage({ params }) {
 
   if (!script) notFound();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect(`/login?next=/scripts/${slug}`);
+  }
+
   await supabase.rpc("increment_views", { p_slug: slug });
   const views = script.views + 1;
 
@@ -40,24 +48,22 @@ export default async function ScriptDetailPage({ params }) {
 
   let hasAccess = !script.is_paid;
   if (script.is_paid) {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      const { data: purchase } = await supabase
-        .from("purchases")
-        .select("id")
-        .eq("user_id", user.id)
-        .maybeSingle();
-      hasAccess = !!purchase;
-    }
+    const { data: purchase } = await supabase
+      .from("purchases")
+      .select("id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    hasAccess = !!purchase;
   }
 
   return (
     <>
       <header className="site-header">
         <a className="logo" href="/">
-          CHARMANDER<span className="logo-suffix"> SCRIPTS</span>
+          <span className="logo-badge">
+            <img className="logo-mark" src="/charmander-logo.png" alt="" width="64" height="64" />
+          </span>
+          <span className="logo-text">CHARMANDER<span className="logo-suffix"> SCRIPTS</span></span>
         </a>
         <a className="btn btn-ghost" href="/#catalogo">
           <span className="back-full">&larr; Voltar ao catálogo</span>
@@ -99,7 +105,8 @@ export default async function ScriptDetailPage({ params }) {
           {hasAccess ? (
             <>
               <div className="code-block">
-                <code>{script.copy_command}</code>
+                <span className="code-block-lang">lua</span>
+                <pre className="code-block-body"><code>{script.copy_command}</code></pre>
               </div>
               <CopyButton command={script.copy_command} />
             </>

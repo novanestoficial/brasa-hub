@@ -43,7 +43,9 @@ export default async function HomePage() {
     <>
       <header className="site-header">
         <a className="logo" href="#topo">
-          <img className="logo-mark" src="/logo-mark.png" alt="" width="109" height="220" />
+          <span className="logo-badge">
+            <img className="logo-mark" src="/charmander-logo.png" alt="" width="64" height="64" />
+          </span>
           <span className="logo-text">CHARMANDER<span className="logo-suffix"> SCRIPTS</span></span>
         </a>
         <nav className="main-nav">
@@ -121,7 +123,10 @@ export default async function HomePage() {
 
         {!hasBundleAccess && bundleScripts.length === 2 && (
           <div className="featured-cards">
-            <div className="wrap">
+            <div className="wrap bundle-panel">
+              <p className="bundle-eyebrow">Pacote premium</p>
+              <p className="bundle-price">R$ 4,99</p>
+              <p className="bundle-price-note">os 2 scripts pagos, de uma vez</p>
               <div className="bundle-cards">
                 {bundleScripts.map((s) => (
                   <article className="card card-simple" key={s.slug}>
@@ -158,7 +163,7 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <CatalogGrid scripts={scripts} />
+            <CatalogGrid scripts={scripts} locked={!user} />
 
             <p className="coming-soon">🔥 Mais scripts chegando em breve — fica de olho.</p>
           </div>

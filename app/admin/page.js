@@ -54,7 +54,10 @@ export default async function AdminPage() {
     <>
       <header className="site-header">
         <a className="logo" href="/">
-          CHARMANDER<span className="logo-suffix"> SCRIPTS</span>
+          <span className="logo-badge">
+            <img className="logo-mark" src="/charmander-logo.png" alt="" width="64" height="64" />
+          </span>
+          <span className="logo-text">CHARMANDER<span className="logo-suffix"> SCRIPTS</span></span>
         </a>
         <a className="btn btn-ghost" href="/">
           <span className="back-full">&larr; Voltar ao site</span>
