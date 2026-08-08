@@ -2,11 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 
+const MAX_BYTES = 8 * 1024 * 1024; // 8MB — mesmo limite validado no server action
+
 export default function ImageDropzone({ name, onFileChange }) {
   const inputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [fileName, setFileName] = useState("");
   const [dragOver, setDragOver] = useState(false);
+  const [sizeError, setSizeError] = useState("");
 
   useEffect(() => {
     return () => {
@@ -16,6 +19,12 @@ export default function ImageDropzone({ name, onFileChange }) {
 
   function applyFile(file) {
     if (!file || !file.type.startsWith("image/")) return;
+
+    if (file.size > MAX_BYTES) {
+      setSizeError(`Imagem muito grande (${(file.size / 1024 / 1024).toFixed(1)}MB) — máximo de 8MB.`);
+      return;
+    }
+    setSizeError("");
 
     const dt = new DataTransfer();
     dt.items.add(file);
@@ -60,6 +69,7 @@ export default function ImageDropzone({ name, onFileChange }) {
   }
 
   return (
+    <>
     <div
       className={`image-dropzone${dragOver ? " is-dragover" : ""}${previewUrl ? " has-image" : ""}`}
       role="button"
@@ -108,5 +118,7 @@ export default function ImageDropzone({ name, onFileChange }) {
         </div>
       )}
     </div>
+    {sizeError && <p className="auth-error">{sizeError}</p>}
+    </>
   );
 }
