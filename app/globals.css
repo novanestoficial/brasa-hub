@@ -1507,6 +1507,7 @@
 
   .detail-title-row .detail-title { margin-bottom: 0; }
   .detail-title-row .badge-group { margin-bottom: 20px; }
+  .detail-title-row .like-button-lg { margin-bottom: 20px; }
   .detail-title-row .pill { font-size: 0.78rem; padding: 6px 13px; }
 
   .detail-meta {
@@ -1577,7 +1578,7 @@
     width: fit-content;
     align-items: center;
     gap: 7px;
-    margin: 14px auto 0;
+    margin: 0;
     padding: 7px 16px;
     border-radius: var(--r-pill);
     border: 1.5px solid var(--line-strong);
@@ -1620,6 +1621,10 @@
 
   .like-button-lg.liked .like-button-label { color: #1a0d05; }
 
+  .like-button-lg.liked .like-button-icon {
+    animation: heart-burst 0.5s var(--ease-out);
+  }
+
   .like-button-lg:disabled { cursor: default; }
 
   @keyframes like-pop {
@@ -1628,9 +1633,18 @@
     100% { transform: scale(1); }
   }
 
+  @keyframes heart-burst {
+    0% { transform: scale(1) rotate(0deg); }
+    30% { transform: scale(1.7) rotate(-8deg); }
+    55% { transform: scale(0.9) rotate(6deg); }
+    75% { transform: scale(1.15) rotate(-3deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .like-button-lg { transition: none; animation: none; }
     .like-button-lg:hover:not(:disabled) { transform: none; }
+    .like-button-lg.liked .like-button-icon { animation: none; }
   }
 
   .code-block {

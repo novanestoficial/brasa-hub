@@ -74,6 +74,7 @@ export default async function ScriptDetailPage({ params }) {
           <div className="detail-title-row">
             <h1 className="detail-title">{script.name}</h1>
             <ScriptBadges script={script} />
+            <LikeButton slug={slug} initialLiked={liked} />
           </div>
 
           <div className="detail-meta">
@@ -97,8 +98,6 @@ export default async function ScriptDetailPage({ params }) {
             />
             <span className="stats-overlay stat-views">👁 {views}</span>
           </div>
-
-          <LikeButton slug={slug} initialLiked={liked} />
 
           {hasAccess ? (
             <>
