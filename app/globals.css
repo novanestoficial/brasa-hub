@@ -1845,57 +1845,58 @@
   /* ---------- admin ---------- */
   .admin-wrap { max-width: 1120px; padding-top: 64px; padding-bottom: 96px; }
 
-  /* ---------- admin: shell com menu lateral ---------- */
-  .admin-shell {
-    display: grid;
-    grid-template-columns: 216px minmax(0, 1fr);
-    gap: 32px;
-    align-items: start;
-    margin-top: 32px;
+  /* ---------- admin: navegação por seções (no header no desktop,
+     barra horizontal no mobile — mesmo botão, dois lugares) ---------- */
+  .admin-shell { margin-top: 8px; }
+
+  .admin-content { min-width: 0; }
+
+  .admin-header-nav {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    justify-content: center;
   }
 
-  .admin-sidebar {
-    position: sticky;
-    top: 90px;
+  .admin-mobile-nav {
     display: flex;
-    flex-direction: column;
-    gap: 3px;
-    padding: 10px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-md);
-    background: linear-gradient(155deg, var(--surface-1), var(--surface-2));
-    box-shadow: var(--sh-1);
+    overflow-x: auto;
+    gap: 6px;
+    margin-bottom: 22px;
   }
 
   .admin-sidebar-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    border-radius: var(--r-sm);
+    gap: 8px;
+    padding: 9px 13px;
+    border-radius: var(--r-pill);
     border: none;
     background: transparent;
     color: var(--text-dim);
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    flex-shrink: 0;
     text-align: left;
     cursor: pointer;
     transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
   }
 
-  .admin-sidebar-icon { display: flex; width: 17px; height: 17px; flex-shrink: 0; }
+  .admin-sidebar-icon { display: flex; width: 16px; height: 16px; flex-shrink: 0; }
   .admin-sidebar-icon svg { width: 100%; height: 100%; }
 
   .admin-sidebar-item:hover { background: rgba(255, 107, 26, 0.09); color: var(--text); }
 
+  /* seção selecionada: verde florescente, igual no header (desktop) e na
+     barra mobile — não é mais o laranja de destaque do resto do site */
   .admin-sidebar-item.is-active {
-    background: linear-gradient(135deg, var(--flame), var(--ember));
-    color: #1a0d05;
+    background: linear-gradient(135deg, #2df996, #16d97a);
+    color: #05170d;
     font-weight: 700;
-    box-shadow: var(--glow-sm);
+    box-shadow: 0 0 0 1px rgba(45, 249, 150, 0.5), 0 0 16px 2px rgba(45, 249, 150, 0.55);
   }
-
-  .admin-content { min-width: 0; }
 
   .admin-tab-panel { animation: admin-tab-in 0.25s var(--ease-out); }
 
@@ -1904,15 +1905,9 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  @media (max-width: 860px) {
-    .admin-shell { grid-template-columns: 1fr; gap: 18px; }
-    .admin-sidebar {
-      position: static;
-      flex-direction: row;
-      overflow-x: auto;
-      gap: 6px;
-    }
-    .admin-sidebar-item { white-space: nowrap; flex-shrink: 0; }
+  @media (min-width: 861px) {
+    .admin-header-nav { display: flex; }
+    .admin-mobile-nav { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {

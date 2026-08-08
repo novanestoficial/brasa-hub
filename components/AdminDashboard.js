@@ -9,6 +9,7 @@ const TABS = [
   {
     id: "stats",
     label: "Estatísticas",
+    shortLabel: "Estatísticas",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 20V10M12 20V4M20 20v-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -18,6 +19,7 @@ const TABS = [
   {
     id: "users",
     label: "Usuários cadastrados",
+    shortLabel: "Usuários",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <circle cx="9" cy="8" r="3.2" fill="none" stroke="currentColor" strokeWidth="1.8" />
@@ -28,6 +30,7 @@ const TABS = [
   {
     id: "add",
     label: "Adicionar script",
+    shortLabel: "Adicionar",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -37,6 +40,7 @@ const TABS = [
   {
     id: "manage",
     label: "Gerenciar scripts",
+    shortLabel: "Gerenciar",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -68,21 +72,49 @@ export default function AdminDashboard({
 }) {
   const [active, setActive] = useState("stats");
 
+  function renderNavItems(variant) {
+    return TABS.map((tab) => (
+      <button
+        key={tab.id}
+        type="button"
+        className={`admin-sidebar-item${active === tab.id ? " is-active" : ""}`}
+        onClick={() => setActive(tab.id)}
+        aria-current={active === tab.id ? "page" : undefined}
+      >
+        <span className="admin-sidebar-icon">{tab.icon}</span>
+        {variant === "header" ? tab.shortLabel : tab.label}
+      </button>
+    ));
+  }
+
   return (
-    <div className="admin-shell">
-      <nav className="admin-sidebar" aria-label="Seções do admin">
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            className={`admin-sidebar-item${active === tab.id ? " is-active" : ""}`}
-            onClick={() => setActive(tab.id)}
-            aria-current={active === tab.id ? "page" : undefined}
-          >
-            <span className="admin-sidebar-icon">{tab.icon}</span>
-            {tab.label}
-          </button>
-        ))}
+    <>
+      <header className="site-header">
+        <a className="logo" href="/">
+          <span className="logo-badge">
+            <img className="logo-mark" src="/charmander-logo.png" alt="" width="64" height="64" />
+          </span>
+          <span className="logo-text">CHARMANDER<span className="logo-suffix"> SCRIPTS</span></span>
+        </a>
+
+        <nav className="admin-header-nav" aria-label="Seções do admin">
+          {renderNavItems("header")}
+        </nav>
+
+        <a className="btn btn-ghost" href="/">
+          <span className="back-full">&larr; Voltar ao site</span>
+          <span className="back-short">&larr; Voltar</span>
+        </a>
+      </header>
+
+      <main>
+      <div className="wrap admin-wrap">
+        <p className="eyebrow">Admin</p>
+        <h1 className="detail-title">Painel</h1>
+
+      <div className="admin-shell">
+      <nav className="admin-mobile-nav" aria-label="Seções do admin (mobile)">
+        {renderNavItems("mobile")}
       </nav>
 
       <div className="admin-content">
@@ -236,6 +268,9 @@ export default function AdminDashboard({
           </div>
         )}
       </div>
-    </div>
+      </div>
+      </div>
+      </main>
+    </>
   );
 }

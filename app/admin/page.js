@@ -82,48 +82,26 @@ export default async function AdminPage() {
     .slice(0, 10);
 
   return (
-    <>
-      <header className="site-header">
-        <a className="logo" href="/">
-          <span className="logo-badge">
-            <img className="logo-mark" src="/charmander-logo.png" alt="" width="64" height="64" />
-          </span>
-          <span className="logo-text">CHARMANDER<span className="logo-suffix"> SCRIPTS</span></span>
-        </a>
-        <a className="btn btn-ghost" href="/">
-          <span className="back-full">&larr; Voltar ao site</span>
-          <span className="back-short">&larr; Voltar</span>
-        </a>
-      </header>
-
-      <main>
-        <div className="wrap admin-wrap">
-          <p className="eyebrow">Admin</p>
-          <h1 className="detail-title">Painel</h1>
-
-          <AdminDashboard
-            totalVisits={totalVisits}
-            totalUsers={totalUsers}
-            totalPurchases={totalPurchases}
-            estimatedRevenue={estimatedRevenue}
-            totalScriptViews={totalScriptViews}
-            totalLikes={totalLikes}
-            conversionRate={conversionRate}
-            mostLiked={mostLiked}
-            visitsToday={visitsToday}
-            visitsWeek={visitsWeek}
-            scriptViewsToday={scriptViewsToday}
-            scriptViewsWeek={scriptViewsWeek}
-            visitsTodayHourly={visitsTodayHourly}
-            visitsWeekHourly={visitsWeekHourly}
-            scriptViewsTodayHourly={scriptViewsTodayHourly}
-            scriptViewsWeekHourly={scriptViewsWeekHourly}
-            scriptList={scriptList}
-            recentUsers={recentUsers}
-            existingCategories={existingCategories}
-          />
-        </div>
-      </main>
-    </>
+    <AdminDashboard
+      totalVisits={totalVisits}
+      totalUsers={totalUsers}
+      totalPurchases={totalPurchases}
+      estimatedRevenue={estimatedRevenue}
+      totalScriptViews={totalScriptViews}
+      totalLikes={totalLikes}
+      conversionRate={conversionRate}
+      mostLiked={mostLiked}
+      visitsToday={visitsToday}
+      visitsWeek={visitsWeek}
+      scriptViewsToday={scriptViewsToday}
+      scriptViewsWeek={scriptViewsWeek}
+      visitsTodayHourly={visitsTodayHourly}
+      visitsWeekHourly={visitsWeekHourly}
+      scriptViewsTodayHourly={scriptViewsTodayHourly}
+      scriptViewsWeekHourly={scriptViewsWeekHourly}
+      scriptList={scriptList}
+      recentUsers={recentUsers}
+      existingCategories={existingCategories}
+    />
   );
 }
