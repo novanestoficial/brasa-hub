@@ -104,3 +104,46 @@ export async function createScript(prevState, formData) {
     return { error: `Algo deu errado ao salvar: ${err?.message || "erro desconhecido"}.` };
   }
 }
+
+export async function deleteScript(prevState, formData) {
+  const supabase = await getSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user || user.email !== ADMIN_EMAIL) {
+    return { error: "Não autorizado." };
+  }
+
+  const slug = formData.get("slug")?.toString();
+  if (!slug) {
+    return { error: "Script inválido." };
+  }
+
+  try {
+    const admin = getSupabaseAdminClient();
+
+    const { data: script } = await admin
+      .from("scripts")
+      .select("name, cover_path")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    const { error: deleteError } = await admin.from("scripts").delete().eq("slug", slug);
+    if (deleteError) {
+      return { error: `Erro ao apagar: ${deleteError.message}` };
+    }
+
+    if (script?.cover_path) {
+      await admin.storage.from(COVERS_BUCKET).remove([script.cover_path]);
+    }
+
+    revalidatePath("/admin");
+    revalidatePath("/");
+
+    return { success: true, name: script?.name || slug };
+  } catch (err) {
+    console.error("deleteScript failed:", err);
+    return { error: `Algo deu errado ao apagar: ${err?.message || "erro desconhecido"}.` };
+  }
+}

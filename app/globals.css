@@ -2081,6 +2081,90 @@
     color: var(--text-dim);
   }
 
+  /* ---------- admin: gerenciar scripts (lista compacta, apagar) ---------- */
+  .admin-section-compact { margin-bottom: 24px; }
+  .admin-section-compact h2 { font-size: 1rem; margin-bottom: 10px; }
+
+  .admin-script-list {
+    display: flex;
+    flex-direction: column;
+    max-width: 480px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    overflow: hidden;
+  }
+
+  .admin-script-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    transition: background var(--dur-1) var(--ease);
+  }
+
+  .admin-script-row:last-child { border-bottom: none; }
+  .admin-script-row:hover { background: rgba(255, 107, 26, 0.04); }
+
+  .admin-script-row-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text);
+  }
+
+  .admin-script-row-delete {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    border-radius: var(--r-xs);
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+  }
+
+  .admin-script-row-delete svg { width: 15px; height: 15px; }
+  .admin-script-row-delete:hover { background: rgba(248, 113, 113, 0.15); color: #f87171; }
+
+  .admin-script-row-confirm { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+  .admin-script-row-confirm-btn, .admin-script-row-cancel-btn {
+    padding: 5px 10px;
+    border-radius: var(--r-xs);
+    border: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-dim);
+    transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+  }
+
+  .admin-script-row-confirm-btn {
+    background: rgba(248, 113, 113, 0.15);
+    border-color: rgba(248, 113, 113, 0.4);
+    color: #f87171;
+  }
+
+  .admin-script-row-confirm-btn:hover { background: rgba(248, 113, 113, 0.28); }
+  .admin-script-row-confirm-btn:disabled { opacity: 0.6; cursor: default; }
+  .admin-script-row-cancel-btn:hover { color: var(--text); border-color: var(--line-strong); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .admin-script-row, .admin-script-row-delete, .admin-script-row-confirm-btn, .admin-script-row-cancel-btn {
+      transition: none;
+    }
+  }
+
   /* ---------- admin: form de cadastro de script ----------
      dois painéis lado a lado com papéis opostos: o form é superfície elevada
      (onde se digita) e o preview é superfície rebaixada (mesa de prova onde o
@@ -2629,53 +2713,51 @@
     .admin-script-preview-label::before { animation: none; }
   }
 
-  /* ---------- toast (canto superior direito, com barra de tempo) ---------- */
+  /* ---------- toast (canto inferior direito, com barra de tempo) ----------
+     canto de baixo é onde toast costuma morar justamente porque não briga com
+     a cromagem do navegador (abas, barra de endereço, favoritos) nem com a
+     barra de tarefas do sistema. cada variante só troca --toast-rgb: borda,
+     halo, ícone e barra saem todos dessa mesma cor. */
   .toast-stack {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    bottom: 22px;
+    right: 22px;
     z-index: 200;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: min(360px, calc(100vw - 32px));
+    gap: 12px;
+    width: min(380px, calc(100vw - 32px));
     pointer-events: none;
   }
 
   .toast-card {
+    /* fallback ember; sucesso/erro sobrescrevem logo abaixo */
+    --toast-rgb: 255, 107, 26;
     position: relative;
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    padding: 14px 34px 16px 14px;
+    gap: 11px;
+    padding: 14px 34px 17px 14px;
     border-radius: var(--r-md);
-    border: 1px solid var(--line-strong);
-    background: linear-gradient(165deg, var(--surface-2), var(--surface-1) 60%, #1e1209 100%);
-    box-shadow: var(--sh-3), 0 0 30px -14px rgba(255, 107, 26, 0.5);
+    border: 1px solid rgba(var(--toast-rgb), 0.45);
+    background:
+      radial-gradient(120% 150% at 0% 100%, rgba(var(--toast-rgb), 0.2), transparent 62%),
+      linear-gradient(165deg, var(--surface-2), var(--surface-1) 58%, #150d06 100%);
+    box-shadow:
+      var(--sh-3),
+      0 0 0 1px rgba(var(--toast-rgb), 0.14),
+      0 14px 40px -16px rgba(var(--toast-rgb), 0.5);
     overflow: hidden;
     pointer-events: auto;
-    animation: toast-in 0.35s var(--ease-out);
-  }
-
-  .toast-card.is-leaving {
-    animation: toast-out 0.32s var(--ease) forwards;
-  }
-
-  @keyframes toast-in {
-    from { transform: translateX(28px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-
-  @keyframes toast-out {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(28px); opacity: 0; }
+    animation: toast-in var(--dur-3) var(--ease-out) both;
   }
 
   .toast-icon {
+    position: relative;
     display: grid;
     place-items: center;
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     flex-shrink: 0;
     border-radius: 50%;
     margin-top: 1px;
@@ -2683,12 +2765,9 @@
 
   .toast-icon svg { width: 15px; height: 15px; }
 
-  .toast-success .toast-icon { color: #34d399; background: rgba(52, 211, 153, 0.16); }
-  .toast-error .toast-icon { color: #f87171; background: rgba(248, 113, 113, 0.16); }
-
   .toast-message {
     margin: 0;
-    padding-top: 3px;
+    padding-top: 4px;
     font-family: var(--font-mono);
     font-size: 0.82rem;
     line-height: 1.5;
@@ -2712,28 +2791,157 @@
   }
 
   .toast-close svg { width: 12px; height: 12px; }
-  .toast-close:hover { background: rgba(255, 255, 255, 0.08); color: var(--text); }
+  .toast-close:hover { background: rgba(var(--toast-rgb), 0.2); color: var(--text); }
 
+  /* a barra encolhe no tempo real do toast: a duração vem inline do JS
+     (DURATION), então aqui só longhands — nada de shorthand `animation`,
+     que zeraria o animation-duration vindo do componente. */
   .toast-bar-track {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.06);
+    height: 4px;
+    background: rgba(0, 0, 0, 0.42);
   }
 
   .toast-bar {
     height: 100%;
     width: 100%;
     transform-origin: left;
+    background: linear-gradient(90deg, rgba(var(--toast-rgb), 0.55), rgb(var(--toast-rgb)));
+    box-shadow: 0 0 12px 1px rgba(var(--toast-rgb), 0.85);
     animation-name: toast-shrink;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
   }
 
-  .toast-success .toast-bar { background: linear-gradient(90deg, #34d399, #10b981); }
-  .toast-error .toast-bar { background: linear-gradient(90deg, #f87171, #ef4444); }
+  /* ---- sucesso: verde vivo, entrada com pique e halo pulsando ---- */
+  .toast-success {
+    --toast-rgb: 45, 249, 150;
+    animation:
+      toast-pop 0.52s var(--ease-out) both,
+      toast-glow 2.2s var(--ease) 0.5s infinite;
+  }
+
+  /* faixa de luz varrendo o card, com pausa entre as passadas */
+  .toast-success::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -60%;
+    width: 55%;
+    pointer-events: none;
+    background: linear-gradient(100deg, transparent, rgba(198, 255, 227, 0.26), transparent);
+    animation: toast-shimmer 2.6s var(--ease-out) 0.35s infinite;
+  }
+
+  .toast-success .toast-icon {
+    color: #06301d;
+    background: linear-gradient(150deg, #8affcb, #17e37e 62%, #05c064);
+    box-shadow: 0 0 16px 2px rgba(45, 249, 150, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  /* o check é desenhado, não aparece de uma vez (mesma ideia do toggle do admin) */
+  .toast-success .toast-icon svg path {
+    stroke-dasharray: 26;
+    stroke-dashoffset: 26;
+    animation: toast-check 0.4s var(--ease-out) 0.24s forwards;
+  }
+
+  /* anel que sai pulsando do ícone */
+  .toast-success .toast-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(45, 249, 150, 0.75);
+    animation: toast-ring 1.9s var(--ease-out) 0.35s infinite;
+  }
+
+  /* ---- erro: vermelho, sem chance de confundir com o verde ---- */
+  .toast-error {
+    --toast-rgb: 248, 90, 90;
+    animation:
+      toast-shake-in 0.6s var(--ease-out) both,
+      toast-glow 2.8s var(--ease) 0.6s infinite;
+  }
+
+  .toast-error .toast-icon {
+    color: #2b0708;
+    background: linear-gradient(150deg, #ffa8a8, #f4524f 62%, #d92d2b);
+    box-shadow: 0 0 14px 1px rgba(248, 90, 90, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.42);
+    animation: toast-alert 1.7s var(--ease) 0.6s infinite;
+  }
+
+  /* saída vem depois das variantes de propósito: `.toast-card.is-leaving`
+     ganha delas na especificidade e mata entrada + pulso de uma vez */
+  .toast-card.is-leaving {
+    animation: toast-out 0.3s var(--ease) forwards;
+  }
+
+  @keyframes toast-in {
+    from { transform: translateY(26px) scale(0.97); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  @keyframes toast-pop {
+    0% { transform: translateY(34px) scale(0.92); opacity: 0; }
+    55% { transform: translateY(-6px) scale(1.035); opacity: 1; }
+    78% { transform: translateY(2px) scale(0.994); }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  @keyframes toast-shake-in {
+    0% { transform: translate(0, 30px); opacity: 0; }
+    45% { transform: translate(0, 0); opacity: 1; }
+    60% { transform: translate(-6px, 0); }
+    72% { transform: translate(5px, 0); }
+    84% { transform: translate(-3px, 0); }
+    100% { transform: translate(0, 0); opacity: 1; }
+  }
+
+  @keyframes toast-out {
+    from { transform: translateY(0) scale(1); opacity: 1; }
+    to { transform: translateY(16px) scale(0.96); opacity: 0; }
+  }
+
+  @keyframes toast-glow {
+    0%, 100% {
+      box-shadow:
+        var(--sh-3),
+        0 0 0 1px rgba(var(--toast-rgb), 0.14),
+        0 14px 40px -16px rgba(var(--toast-rgb), 0.5);
+    }
+    50% {
+      box-shadow:
+        var(--sh-3),
+        0 0 0 1px rgba(var(--toast-rgb), 0.42),
+        0 16px 56px -14px rgba(var(--toast-rgb), 0.95);
+    }
+  }
+
+  @keyframes toast-shimmer {
+    0% { transform: translateX(0); opacity: 0; }
+    12% { opacity: 1; }
+    58%, 100% { transform: translateX(320%); opacity: 0; }
+  }
+
+  @keyframes toast-check {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes toast-ring {
+    0% { transform: scale(1); opacity: 0.8; }
+    70%, 100% { transform: scale(1.85); opacity: 0; }
+  }
+
+  @keyframes toast-alert {
+    0%, 62%, 100% { transform: scale(1); }
+    70% { transform: scale(1.12); }
+    82% { transform: scale(0.97); }
+  }
 
   @keyframes toast-shrink {
     from { transform: scaleX(1); }
@@ -2741,12 +2949,18 @@
   }
 
   @media (max-width: 480px) {
-    .toast-stack { top: 12px; right: 12px; left: 12px; width: auto; }
+    .toast-stack { bottom: 12px; right: 12px; left: 12px; width: auto; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .toast-card { animation: none; }
+    .toast-card,
+    .toast-success,
+    .toast-error { animation: none; }
     .toast-card.is-leaving { animation: none; opacity: 0; }
+    .toast-success::before { animation: none; opacity: 0; }
+    .toast-success .toast-icon svg path { animation: none; stroke-dashoffset: 0; }
+    .toast-success .toast-icon::after { animation: none; opacity: 0; }
+    .toast-error .toast-icon { animation: none; }
     .toast-bar { animation: none; width: 0; }
   }
 

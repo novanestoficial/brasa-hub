@@ -4,6 +4,7 @@ import { getSupabaseAdminClient } from "../../lib/supabase/admin";
 import { ADMIN_EMAIL } from "../../lib/admin";
 import HourlyChart from "../../components/HourlyChart";
 import AdminScriptForm from "../../components/AdminScriptForm";
+import AdminScriptList from "../../components/AdminScriptList";
 
 export const metadata = {
   title: "Admin — CHARMANDER SCRIPTS",
@@ -172,6 +173,11 @@ export default async function AdminPage() {
         <section className="admin-section">
           <h2>Adicionar script</h2>
           <AdminScriptForm existingCategories={existingCategories} />
+        </section>
+
+        <section className="admin-section admin-section-compact">
+          <h2>Gerenciar scripts</h2>
+          <AdminScriptList scripts={scriptList.map((s) => ({ slug: s.slug, name: s.name }))} />
         </section>
 
         <section className="admin-section">
