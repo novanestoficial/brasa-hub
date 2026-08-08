@@ -2,15 +2,19 @@
 
 import { useState } from "react";
 import ScriptBadges from "./ScriptBadges";
+import { formatCategoryLabel } from "../lib/slugify";
 
-const FILTERS = [
-  { filter: "todos", label: "Todos", featured: false },
-  { filter: "desastre", label: "Desastre", featured: false },
-  { filter: "universal", label: "Universal", featured: false },
-  { filter: "blox-fruits", label: "Blox Fruits", featured: false },
-  { filter: "grow-a-garden-2", label: "Grow a Garden 2", featured: false },
-  { filter: "gravar", label: "🎥 Scripts que uso pra gravar", featured: true },
-];
+function buildFilters(categories) {
+  const filters = [{ filter: "todos", label: "Todos", featured: false }];
+  for (const cat of categories) {
+    if (cat === "gravar") {
+      filters.push({ filter: "gravar", label: "🎥 Scripts que uso pra gravar", featured: true });
+    } else {
+      filters.push({ filter: cat, label: formatCategoryLabel(cat), featured: false });
+    }
+  }
+  return filters;
+}
 
 function LockBadge() {
   return (
@@ -24,8 +28,9 @@ function LockBadge() {
   );
 }
 
-export default function CatalogGrid({ scripts, locked = false }) {
+export default function CatalogGrid({ scripts, locked = false, categories = [] }) {
   const [activeFilter, setActiveFilter] = useState("todos");
+  const filters = buildFilters(categories);
 
   const visible = scripts.filter(
     (script) => activeFilter === "todos" || script.categories.includes(activeFilter)
@@ -34,7 +39,7 @@ export default function CatalogGrid({ scripts, locked = false }) {
   return (
     <>
       <div className="filters" role="group" aria-label="Filtrar por categoria">
-        {FILTERS.map(({ filter, label, featured }) => (
+        {filters.map(({ filter, label, featured }) => (
           <button
             key={filter}
             className={featured ? "filter-pill filter-pill-featured" : "filter-pill"}

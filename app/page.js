@@ -23,6 +23,8 @@ export default async function HomePage() {
     coverUrl: getCoverUrl(supabase, script.cover_path),
   }));
 
+  const categories = [...new Set(scripts.flatMap((s) => s.categories || []))].sort();
+
   let hasBundleAccess = false;
   if (user) {
     const { data: purchase } = await supabase
@@ -168,7 +170,7 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <CatalogGrid scripts={scripts} locked={!user} />
+            <CatalogGrid scripts={scripts} locked={!user} categories={categories} />
 
             <p className="coming-soon">🔥 Mais scripts chegando em breve — fica de olho.</p>
           </div>

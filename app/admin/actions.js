@@ -4,17 +4,9 @@ import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "../../lib/supabase/server";
 import { getSupabaseAdminClient } from "../../lib/supabase/admin";
 import { ADMIN_EMAIL } from "../../lib/admin";
+import { slugify } from "../../lib/slugify";
 
 const COVERS_BUCKET = "script-covers";
-
-function slugify(text) {
-  return text
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
 
 export async function createScript(prevState, formData) {
   const supabase = await getSupabaseServerClient();
@@ -32,6 +24,10 @@ export async function createScript(prevState, formData) {
   const isPaid = formData.get("is_paid") === "on";
   const hasKey = formData.get("has_key") === "on";
   const cover = formData.get("cover");
+  const existingCategories = formData.getAll("categories").map((c) => c.toString());
+  const newCategoryRaw = formData.get("new_category")?.toString().trim();
+  const newCategorySlug = newCategoryRaw ? slugify(newCategoryRaw) : "";
+  const categories = [...new Set([...existingCategories, newCategorySlug].filter(Boolean))];
 
   if (!name || !description || !copyCommand) {
     return { error: "Preenche título, descrição e o loadstring." };
@@ -84,7 +80,7 @@ export async function createScript(prevState, formData) {
     meta_description: `${name} — ${shortDesc}`,
     copy_command: copyCommand,
     cover_path: coverFilename,
-    categories: [],
+    categories,
     is_paid: isPaid,
     has_key: hasKey,
     origin: "script pessoal",

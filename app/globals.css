@@ -2185,6 +2185,46 @@
 
   .admin-script-form .auth-submit { margin-top: 2px; }
 
+  /* ---------- filtros existentes (multi-select em forma de pill) ---------- */
+  .admin-category-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+
+  .admin-category-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 14px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--line);
+    background: rgba(255, 107, 26, 0.04);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: background var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+  }
+
+  .admin-category-chip:hover { border-color: var(--line-strong); color: var(--text); }
+
+  .admin-category-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .admin-category-chip:has(.admin-category-input:checked) {
+    background: linear-gradient(140deg, var(--flame), var(--ember) 70%);
+    border-color: var(--flame);
+    color: #1a0d05;
+    font-weight: 700;
+  }
+
+  .admin-category-input:focus-visible ~ span {
+    outline: 2px solid var(--flame);
+    outline-offset: 2px;
+    border-radius: var(--r-xs);
+  }
+
   /* ---------- checkbox custom (pago / key) ----------
      o alvo clicável é o chip inteiro; a caixinha arredondada carrega o estado */
   .admin-form-toggles {

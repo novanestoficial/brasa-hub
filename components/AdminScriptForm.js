@@ -4,10 +4,11 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { createScript } from "../app/admin/actions";
 import ImageDropzone from "./ImageDropzone";
 import ScriptBadges from "./ScriptBadges";
+import { formatCategoryLabel } from "../lib/slugify";
 
 const initialState = {};
 
-export default function AdminScriptForm() {
+export default function AdminScriptForm({ existingCategories = [] }) {
   const [state, formAction, pending] = useActionState(createScript, initialState);
   const formRef = useRef(null);
 
@@ -63,6 +64,25 @@ export default function AdminScriptForm() {
             rows={2}
             placeholder='loadstring(game:HttpGet("..."))()'
           />
+        </label>
+
+        {existingCategories.length > 0 && (
+          <div className="auth-label">
+            Filtros existentes (opcional — pra qual jogo é esse script)
+            <div className="admin-category-list">
+              {existingCategories.map((cat) => (
+                <label key={cat} className="admin-category-chip">
+                  <input type="checkbox" name="categories" value={cat} className="admin-category-input" />
+                  <span>{formatCategoryLabel(cat)}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <label className="auth-label">
+          Novo filtro (opcional — cria um filtro novo pra um jogo que ainda não tem)
+          <input className="auth-input" type="text" name="new_category" maxLength={60} placeholder="Ex: Grow a Garden 2" />
         </label>
 
         <div className="admin-form-toggles">

@@ -71,6 +71,7 @@ export default async function AdminPage() {
   const estimatedRevenue = (totalPurchases * paidPrice).toFixed(2).replace(".", ",");
 
   const scriptList = scripts ?? [];
+  const existingCategories = [...new Set(scriptList.flatMap((s) => s.categories || []))].sort();
   const totalScriptViews = scriptList.reduce((sum, s) => sum + (s.views || 0), 0);
   const totalLikes = scriptList.reduce((sum, s) => sum + (s.likes || 0), 0);
   const mostLiked = [...scriptList].sort((a, b) => (b.likes || 0) - (a.likes || 0))[0];
@@ -170,7 +171,7 @@ export default async function AdminPage() {
 
         <section className="admin-section">
           <h2>Adicionar script</h2>
-          <AdminScriptForm />
+          <AdminScriptForm existingCategories={existingCategories} />
         </section>
 
         <section className="admin-section">
