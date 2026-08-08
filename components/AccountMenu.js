@@ -89,7 +89,7 @@ export default function AccountMenu({ user, isAdmin, purchasedScripts, likedScri
           </div>
 
           <div className="account-panel-section">
-            <p className="account-panel-label">Favoritos</p>
+            <p className="account-panel-label">❤️ Scripts curtidos</p>
             <ScriptList items={likedScripts} emptyText="Curte um script pra ele aparecer aqui." />
           </div>
 

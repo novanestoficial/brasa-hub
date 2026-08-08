@@ -3,6 +3,7 @@ import { getSupabaseServerClient, getCoverUrl } from "../../../lib/supabase/serv
 import CopyButton from "../../../components/CopyButton";
 import ScriptBadges from "../../../components/ScriptBadges";
 import LikeButton from "../../../components/LikeButton";
+import SiteHeader from "../../../components/SiteHeader";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -65,18 +66,7 @@ export default async function ScriptDetailPage({ params }) {
 
   return (
     <>
-      <header className="site-header">
-        <a className="logo" href="/">
-          <span className="logo-badge">
-            <img className="logo-mark" src="/charmander-logo.png" alt="" width="64" height="64" />
-          </span>
-          <span className="logo-text">CHARMANDER<span className="logo-suffix"> SCRIPTS</span></span>
-        </a>
-        <a className="btn btn-ghost" href="/#catalogo">
-          <span className="back-full">&larr; Voltar ao catálogo</span>
-          <span className="back-short">&larr; Voltar</span>
-        </a>
-      </header>
+      <SiteHeader logoHref="/" backHref="/#catalogo" />
 
       <main>
         <div className="wrap detail-wrap">
@@ -108,7 +98,7 @@ export default async function ScriptDetailPage({ params }) {
             <span className="stats-overlay stat-views">👁 {views}</span>
           </div>
 
-          <LikeButton slug={slug} initialLikes={script.likes} initialLiked={liked} />
+          <LikeButton slug={slug} initialLiked={liked} />
 
           {hasAccess ? (
             <>

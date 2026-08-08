@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { getSupabaseBrowserClient } from "../lib/supabase/client";
 
-export default function LikeButton({ slug, initialLikes, initialLiked = false }) {
-  const [likes, setLikes] = useState(initialLikes);
+export default function LikeButton({ slug, initialLiked = false }) {
   const [liked, setLiked] = useState(initialLiked);
   const [busy, setBusy] = useState(false);
 
@@ -14,7 +13,6 @@ export default function LikeButton({ slug, initialLikes, initialLiked = false })
 
     const nextLiked = !liked;
     setLiked(nextLiked);
-    setLikes((n) => n + (nextLiked ? 1 : -1));
 
     const supabase = getSupabaseBrowserClient();
     const { data, error } = await supabase.rpc("toggle_like", { p_slug: slug });
@@ -22,10 +20,8 @@ export default function LikeButton({ slug, initialLikes, initialLiked = false })
 
     if (error || !row) {
       setLiked(!nextLiked);
-      setLikes((n) => n - (nextLiked ? 1 : -1));
     } else {
       setLiked(row.liked);
-      setLikes(row.likes);
     }
     setBusy(false);
   }
@@ -39,8 +35,7 @@ export default function LikeButton({ slug, initialLikes, initialLiked = false })
       aria-pressed={liked}
       aria-label={liked ? "Remover dos favoritos" : "Curtir e favoritar esse script"}
     >
-      <span className="like-button-icon" aria-hidden="true">👍</span>
-      <span className="like-button-count">{likes}</span>
+      <span className="like-button-icon" aria-hidden="true">{liked ? "❤️" : "🤍"}</span>
       <span className="like-button-label">{liked ? "Curtido" : "Curtir"}</span>
     </button>
   );

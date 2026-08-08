@@ -62,7 +62,7 @@ export default function CatalogGrid({ scripts, locked = false }) {
                 />
                 {locked && <LockBadge />}
                 <span className="stats-overlay stat-views">👁 {script.views}</span>
-                <span className="stats-overlay stat-likes">👍 {script.likes}</span>
+                <span className="stats-overlay stat-likes">❤️ {script.likes}</span>
               </div>
               <div className="card-name-row">
                 <span className="card-name">{script.name}</span>
