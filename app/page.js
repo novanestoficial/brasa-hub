@@ -178,12 +178,6 @@ export default async function HomePage() {
       <footer>
         <div className="wrap footer-inner">
           <span>&copy; 2026 CHARMANDER &mdash; hub de scripts.</span>
-          <div className="footer-links">
-            <a href="#">Documentação</a>
-            <a href="#">Changelog</a>
-            <a href="#">Status</a>
-            <a href="#">GitHub</a>
-          </div>
         </div>
       </footer>
     </>
