@@ -43,8 +43,8 @@ export default async function SiteHeader({ logoHref = "/", backHref }) {
       <nav className="main-nav">
         <div className="nav-links">
           {backHref && (
-            <a href={backHref} className="nav-link-links">
-              <svg className="nav-link-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <a href={backHref} className="nav-link-links nav-link-back">
+              <svg className="nav-link-icon nav-link-back-icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               <span className="nav-link-text">Voltar</span>

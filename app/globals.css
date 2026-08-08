@@ -306,6 +306,24 @@
   .nav-link-links { display: flex; align-items: center; gap: 6px; }
   .nav-link-icon { display: none; width: 18px; height: 18px; }
 
+  /* botão de voltar precisa se destacar dos outros links do nav, não sumir junto */
+  nav.main-nav a.nav-link-back {
+    color: var(--text);
+    background: rgba(255, 107, 26, 0.12);
+    border: 1px solid var(--line);
+    padding: 6px 14px 6px 10px;
+    border-radius: var(--r-pill);
+    transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+  }
+
+  .nav-link-back-icon { display: block !important; width: 15px; height: 15px; color: var(--flame); }
+
+  nav.main-nav a.nav-link-back:hover {
+    color: var(--flame);
+    background: rgba(255, 107, 26, 0.22);
+    border-color: var(--line-strong);
+  }
+
   .auth-nav { display: flex; align-items: center; gap: 14px; }
 
   .auth-login, .auth-logout, .auth-admin { display: flex; align-items: center; gap: 6px; }
@@ -1043,6 +1061,104 @@
     gap: clamp(16px, 2vw, 24px);
   }
 
+  /* ---------- oferta (compartilhado: painel do pacote + paywall) ----------
+     mesma escada de leitura nos dois lugares: benefício -> prova -> preço -> CTA */
+  .offer-benefits {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
+    gap: 10px;
+    margin: 0 0 18px;
+    padding: 0;
+    text-align: left;
+  }
+
+  .offer-benefit {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 11px;
+    padding: 12px 14px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--line);
+    background: rgba(255, 107, 26, 0.05);
+  }
+
+  /* o check precisa ser lido antes do texto: é ele que faz a lista virar "tudo isso vem junto" */
+  .offer-check {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    border-radius: 50%;
+    background: linear-gradient(140deg, var(--flame), var(--ember));
+    color: #1a0d05;
+    font-size: 0.72rem;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: 0 2px 8px -3px rgba(255, 107, 26, 0.9);
+  }
+
+  .offer-benefit > div > b {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .offer-benefit > div > span {
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text-dim);
+  }
+
+  /* prova social: números reais do banco (views/likes/compras), nada inventado */
+  .offer-proof {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 10px;
+    margin-bottom: 22px;
+  }
+
+  .offer-proof-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+    padding: 7px 13px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--line);
+    background: rgba(255, 107, 26, 0.06);
+    font-family: var(--font-mono);
+    font-size: 0.73rem;
+    color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .offer-proof-item b {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--flame);
+  }
+
+  /* degrau final: preço, botão e a garantia curta andam juntos */
+  .offer-buy {
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .offer-note {
+    max-width: 42ch;
+    margin: 12px auto 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+  }
+
   /* ---------- bundle promo (featured upsell) ---------- */
   .featured-cards {
     padding: clamp(24px, 4vw, 44px) clamp(20px, 6vw, 48px) clamp(28px, 5vw, 44px);
@@ -1073,7 +1189,7 @@
     background: linear-gradient(90deg, transparent, var(--flame), transparent);
   }
 
-  .bundle-eyebrow {
+  .bundle-eyebrow, .paywall-eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -1091,7 +1207,7 @@
   }
 
   /* mesma "brasa" do .eyebrow, pra oferta falar a língua do resto do site */
-  .bundle-eyebrow::before {
+  .bundle-eyebrow::before, .paywall-eyebrow::before {
     content: '';
     width: 7px;
     height: 7px;
@@ -1099,6 +1215,27 @@
     border-radius: 50%;
     background: var(--ember);
     box-shadow: 0 0 8px 2px rgba(255, 107, 26, 0.8);
+  }
+
+  .bundle-title {
+    margin: 12px 0 8px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(1.55rem, 4.6vw, 2.15rem);
+    line-height: 0.98;
+    letter-spacing: -0.005em;
+    color: var(--text);
+    text-wrap: balance;
+  }
+
+  .bundle-sub {
+    max-width: 42ch;
+    margin: 0 auto;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+    text-wrap: balance;
   }
 
   .bundle-price {
@@ -1115,7 +1252,7 @@
   }
 
   .bundle-price-note {
-    margin: 2px 0 0;
+    margin: 3px 0 16px;
     font-family: var(--font-mono);
     font-size: 0.78rem;
     letter-spacing: 0.05em;
@@ -1126,7 +1263,7 @@
     position: relative;
     width: 280px;
     height: 320px;
-    margin: 18px auto 26px;
+    margin: 20px auto 24px;
   }
 
   .bundle-cards .card {
@@ -1805,7 +1942,30 @@
     background: linear-gradient(90deg, transparent, var(--flame), transparent);
   }
 
-  .paywall p { color: var(--text-dim); margin: 0 0 20px; max-width: 44ch; margin-inline: auto; }
+  .paywall-eyebrow { margin: 0 0 14px; }
+
+  .paywall-title {
+    margin: 0 0 10px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(1.7rem, 5vw, 2.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.005em;
+    color: var(--text);
+    text-wrap: balance;
+  }
+
+  .paywall-lede {
+    max-width: 52ch;
+    margin: 0 auto 22px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    text-wrap: balance;
+  }
+
+  .paywall-lede strong { color: var(--flame); font-weight: 700; }
 
   .paywall-price {
     font-family: var(--font-display);
@@ -1817,11 +1977,18 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    max-width: none;
-    margin: 0 auto 10px !important;
+    margin: 0 auto 3px;
   }
 
-  .paywall .btn { max-width: 340px; }
+  .paywall-price-note {
+    margin: 0 0 16px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+  }
+
+  .paywall .btn { max-width: 360px; }
 
   /* ---------- auth pages ---------- */
   .auth-wrap {
@@ -2246,6 +2413,10 @@
     .bundle-cards .card { width: 168px; }
     .bundle-cards .card:nth-child(1) { left: -14px; }
     .bundle-cards .card:nth-child(2) { left: 36px; }
+
+    .offer-benefit { padding: 11px 12px; gap: 10px; }
+    .offer-proof { gap: 7px 8px; margin-bottom: 18px; }
+    .offer-proof-item { padding: 6px 11px; font-size: 0.7rem; }
 
     .code-block-body { padding: 14px 16px; }
     .footer-inner { justify-content: center; text-align: center; }
