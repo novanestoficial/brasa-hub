@@ -5,12 +5,14 @@ import { createScript } from "../app/admin/actions";
 import ImageDropzone from "./ImageDropzone";
 import ScriptBadges from "./ScriptBadges";
 import { formatCategoryLabel } from "../lib/slugify";
+import { useToasts, ToastStack } from "./Toast";
 
 const initialState = {};
 
 export default function AdminScriptForm({ existingCategories = [] }) {
   const [state, formAction, pending] = useActionState(createScript, initialState);
   const formRef = useRef(null);
+  const { toasts, pushToast, dismiss } = useToasts();
 
   const [name, setName] = useState("");
   const [isPaid, setIsPaid] = useState(false);
@@ -19,18 +21,24 @@ export default function AdminScriptForm({ existingCategories = [] }) {
 
   useEffect(() => {
     if (state?.success) {
+      pushToast("success", `"${state.name}" adicionado com sucesso.`);
       formRef.current?.reset();
       setName("");
       setIsPaid(false);
       setHasKey(false);
       setCoverPreviewUrl(null);
+    } else if (state?.error) {
+      pushToast("error", state.error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   const previewScript = { is_paid: isPaid, has_key: hasKey };
 
   return (
     <div className="admin-script-editor">
+      <ToastStack toasts={toasts} onDismiss={dismiss} />
+
       <form className="auth-form admin-script-form" action={formAction} ref={formRef}>
         <label className="auth-label">
           Título
@@ -118,9 +126,6 @@ export default function AdminScriptForm({ existingCategories = [] }) {
             <span className="admin-toggle-label">Precisa de key</span>
           </label>
         </div>
-
-        {state?.error && <p className="auth-error">{state.error}</p>}
-        {state?.success && <p className="auth-success">"{state.name}" adicionado com sucesso.</p>}
 
         <button className="btn btn-primary auth-submit" type="submit" disabled={pending}>
           {pending ? "Salvando..." : "Adicionar script"}
