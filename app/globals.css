@@ -1994,8 +1994,8 @@
 
   .admin-today-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
   }
 
   .admin-today-card {
@@ -2003,11 +2003,10 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    padding: 16px 18px;
+    padding: 16px 18px 14px;
     border-radius: var(--r-md);
     border: 1px solid var(--line);
     background: rgba(255, 107, 26, 0.05);
-    cursor: default;
   }
 
   .admin-today-period {
@@ -2038,41 +2037,15 @@
     color: var(--text-dim);
   }
 
-  /* gráfico por horário: some ao passar o mouse no card, ninguém precisa clicar
-     em nada. padding-top faz a ponte de hover até o painel (sem buraco morto) */
-  .admin-today-chart-pop {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    width: max-content;
-    max-width: calc(100vw - 32px);
+  /* gráfico por horário: sempre visível, alinhado embaixo do número do card
+     (nada de hover — o usuário pediu pra ficar exposto direto) */
+  .admin-chart {
+    margin-top: 12px;
     padding-top: 12px;
-    transform: translateX(-50%) translateY(-6px);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    z-index: 20;
-    transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease-out), visibility 0s linear var(--dur-2);
+    border-top: 1px solid var(--line);
   }
 
-  .admin-today-card:hover .admin-today-chart-pop,
-  .admin-today-card:focus-within .admin-today-chart-pop {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-    pointer-events: auto;
-    transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease-out);
-  }
-
-  .admin-today-chart-inner {
-    padding: 14px 16px 10px;
-    border-radius: var(--r-md);
-    border: 1px solid var(--line-strong);
-    background: linear-gradient(165deg, var(--surface-2), var(--surface-1) 60%, #1e1209 100%);
-    box-shadow: var(--sh-3), 0 0 30px -14px rgba(255, 107, 26, 0.5);
-  }
-
-  .admin-today-chart-title {
+  .admin-chart-title {
     margin: 0 0 8px;
     font-family: var(--font-mono);
     font-size: 0.66rem;
@@ -2082,9 +2055,9 @@
     white-space: nowrap;
   }
 
-  .admin-today-chart-peak { color: #34d399; font-weight: 700; }
+  .admin-chart-peak { color: #34d399; font-weight: 700; }
 
-  .admin-today-chart-svg { display: block; }
+  .admin-chart-svg { display: block; width: 100%; height: auto; }
 
   /* branco = normal, verde = pico, vermelho = horário morto — status por
      hora, não uma escala contínua */
@@ -2101,10 +2074,6 @@
     font-family: var(--font-mono);
     font-size: 6px;
     fill: var(--text-dim);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .admin-today-chart-pop { transition: none; }
   }
 
   .admin-section { margin-bottom: 24px; }
