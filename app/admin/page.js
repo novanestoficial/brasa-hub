@@ -2,11 +2,24 @@ import { notFound } from "next/navigation";
 import { getSupabaseServerClient } from "../../lib/supabase/server";
 import { getSupabaseAdminClient } from "../../lib/supabase/admin";
 import { ADMIN_EMAIL } from "../../lib/admin";
+import HourlyChart from "../../components/HourlyChart";
 
 export const metadata = {
   title: "Admin — CHARMANDER SCRIPTS",
   robots: "noindex, nofollow",
 };
+
+// agrupa por hora no fuso de Brasília (UTC-3, sem horário de verão) pra o
+// "horário de pico" bater com a hora real de quem tá vendo o painel
+function bucketByHourBR(rows) {
+  const buckets = new Array(24).fill(0);
+  for (const row of rows || []) {
+    const hourUTC = new Date(row.created_at).getUTCHours();
+    const hourBR = (hourUTC + 24 - 3) % 24;
+    buckets[hourBR]++;
+  }
+  return buckets;
+}
 
 export default async function AdminPage() {
   const supabase = await getSupabaseServerClient();
@@ -29,20 +42,25 @@ export default async function AdminPage() {
     { data: siteStats },
     { data: usersResult },
     { count: purchaseCount },
-    { count: visitsToday },
-    { count: visitsWeek },
-    { count: scriptViewsToday },
-    { count: scriptViewsWeek },
+    { data: visitsTodayRows, count: visitsToday },
+    { data: visitsWeekRows, count: visitsWeek },
+    { data: scriptViewsTodayRows, count: scriptViewsToday },
+    { data: scriptViewsWeekRows, count: scriptViewsWeek },
   ] = await Promise.all([
     admin.from("scripts").select("*").order("views", { ascending: false }),
     admin.from("site_stats").select("total_visits").eq("id", 1).maybeSingle(),
     admin.auth.admin.listUsers({ perPage: 200 }),
     admin.from("purchases").select("*", { count: "exact", head: true }),
-    admin.from("visit_log").select("*", { count: "exact", head: true }).gte("created_at", startOfToday),
-    admin.from("visit_log").select("*", { count: "exact", head: true }).gte("created_at", startOfWeek),
-    admin.from("script_view_log").select("*", { count: "exact", head: true }).gte("created_at", startOfToday),
-    admin.from("script_view_log").select("*", { count: "exact", head: true }).gte("created_at", startOfWeek),
+    admin.from("visit_log").select("created_at", { count: "exact" }).gte("created_at", startOfToday),
+    admin.from("visit_log").select("created_at", { count: "exact" }).gte("created_at", startOfWeek),
+    admin.from("script_view_log").select("created_at", { count: "exact" }).gte("created_at", startOfToday),
+    admin.from("script_view_log").select("created_at", { count: "exact" }).gte("created_at", startOfWeek),
   ]);
+
+  const visitsTodayHourly = bucketByHourBR(visitsTodayRows);
+  const visitsWeekHourly = bucketByHourBR(visitsWeekRows);
+  const scriptViewsTodayHourly = bucketByHourBR(scriptViewsTodayRows);
+  const scriptViewsWeekHourly = bucketByHourBR(scriptViewsWeekRows);
 
   const totalVisits = siteStats?.total_visits ?? 0;
   const users = usersResult?.users ?? [];
@@ -126,21 +144,25 @@ export default async function AdminPage() {
               <span className="admin-today-period">Hoje</span>
               <span className="admin-today-value">{visitsToday ?? 0}</span>
               <span className="admin-today-label">Visitas</span>
+              <HourlyChart buckets={visitsTodayHourly} unitLabel="visitas" />
             </div>
             <div className="admin-today-card">
               <span className="admin-today-period">Semana</span>
               <span className="admin-today-value">{visitsWeek ?? 0}</span>
               <span className="admin-today-label">Visitas</span>
+              <HourlyChart buckets={visitsWeekHourly} unitLabel="visitas" />
             </div>
             <div className="admin-today-card">
               <span className="admin-today-period">Hoje</span>
               <span className="admin-today-value">{scriptViewsToday ?? 0}</span>
               <span className="admin-today-label">Cliques em scripts</span>
+              <HourlyChart buckets={scriptViewsTodayHourly} unitLabel="cliques" />
             </div>
             <div className="admin-today-card">
               <span className="admin-today-period">Semana</span>
               <span className="admin-today-value">{scriptViewsWeek ?? 0}</span>
               <span className="admin-today-label">Cliques em scripts</span>
+              <HourlyChart buckets={scriptViewsWeekHourly} unitLabel="cliques" />
             </div>
           </div>
         </div>
