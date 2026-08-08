@@ -56,6 +56,13 @@ export default async function ScriptDetailPage({ params }) {
     hasAccess = !!purchase;
   }
 
+  const { data: likeRow } = await supabase
+    .from("script_likes")
+    .select("id")
+    .eq("script_id", script.id)
+    .maybeSingle();
+  const liked = !!likeRow;
+
   return (
     <>
       <header className="site-header">
@@ -99,7 +106,7 @@ export default async function ScriptDetailPage({ params }) {
               height="270"
             />
             <span className="stats-overlay stat-views">👁 {views}</span>
-            <LikeButton slug={slug} initialLikes={script.likes} />
+            <LikeButton slug={slug} initialLikes={script.likes} initialLiked={liked} />
           </div>
 
           {hasAccess ? (

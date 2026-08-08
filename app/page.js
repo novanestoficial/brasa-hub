@@ -26,6 +26,7 @@ export default async function HomePage() {
   }));
 
   let hasBundleAccess = false;
+  let likedScripts = [];
   if (user) {
     const { data: purchase } = await supabase
       .from("purchases")
@@ -33,7 +34,15 @@ export default async function HomePage() {
       .eq("user_id", user.id)
       .maybeSingle();
     hasBundleAccess = !!purchase;
+
+    const { data: likesData } = await supabase
+      .from("script_likes")
+      .select("scripts(slug, name)")
+      .order("created_at", { ascending: false });
+    likedScripts = (likesData || []).map((row) => row.scripts).filter(Boolean);
   }
+
+  const purchasedScripts = hasBundleAccess ? scripts.filter((s) => s.is_paid) : [];
 
   const bundleScripts = ["explhub", "dropkick"]
     .map((slug) => scripts.find((s) => s.slug === slug))
@@ -57,7 +66,12 @@ export default async function HomePage() {
               <span className="nav-link-text">Links</span>
             </a>
           </div>
-          <AuthNav user={user} isAdmin={isAdmin} />
+          <AuthNav
+            user={user}
+            isAdmin={isAdmin}
+            purchasedScripts={purchasedScripts}
+            likedScripts={likedScripts}
+          />
           <div className="social-links">
             <a
               href="https://www.instagram.com/charmandersafado?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="

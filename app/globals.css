@@ -311,53 +311,213 @@
   .auth-login, .auth-logout, .auth-admin { display: flex; align-items: center; gap: 6px; }
   .auth-icon { display: none; width: 18px; height: 18px; flex-shrink: 0; }
 
-  .auth-email {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    max-width: 160px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .auth-logout {
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    background: transparent;
-    border: none;
-    color: var(--text-dim);
-    cursor: pointer;
-    padding: 0;
-  }
-
-  .auth-logout:hover { color: var(--flame); }
-
-  .auth-admin {
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    color: var(--flame);
-  }
-
-  .auth-admin:hover { color: var(--text); }
-
   @media (max-width: 720px) {
-    .auth-email { display: none; }
     .auth-nav-text { display: none; }
     .auth-icon { display: block; }
-    .auth-login, .auth-logout, .auth-admin {
+    .auth-login {
       padding: 6px;
       min-width: 36px;
       min-height: 36px;
       justify-content: center;
       border-radius: 999px;
     }
-    .auth-login:hover, .auth-logout:hover, .auth-admin:hover { background: rgba(255, 107, 26, 0.12); }
+    .auth-login:hover { background: rgba(255, 107, 26, 0.12); }
+  }
+
+  /* ---------- account menu (hover-revealed) ---------- */
+  .account-menu { position: relative; }
+
+  .account-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--r-pill);
+    padding: 4px 12px 4px 4px;
+    cursor: pointer;
+    color: var(--text);
+    transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+  }
+
+  .account-trigger:hover,
+  .account-menu.open .account-trigger,
+  .account-menu:focus-within .account-trigger {
+    border-color: var(--line);
+    background: rgba(255, 107, 26, 0.08);
+  }
+
+  .account-trigger-name {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .account-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    display: block;
+    border: 1.5px solid var(--line-strong);
+  }
+
+  .account-avatar-fallback {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(150deg, var(--flame), var(--magma));
+    color: #1a0d05;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    border-color: transparent;
+  }
+
+  .account-avatar-lg { width: 48px; height: 48px; font-size: 0.9rem; }
+
+  .account-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 300px;
+    max-width: calc(100vw - 32px);
+    padding-top: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    pointer-events: none;
+    z-index: 30;
+    transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease-out), visibility 0s linear var(--dur-2);
+  }
+
+  .account-menu:hover .account-panel,
+  .account-menu:focus-within .account-panel,
+  .account-menu.open .account-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease-out);
+  }
+
+  .account-panel-inner {
+    border-radius: var(--r-md);
+    border: 1px solid var(--line-strong);
+    background: linear-gradient(165deg, var(--surface-2), var(--surface-1) 60%, #1e1209 100%);
+    box-shadow: var(--sh-3), 0 0 40px -20px rgba(255, 107, 26, 0.55);
+    overflow: hidden;
+  }
+
+  .account-panel-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .account-panel-identity { min-width: 0; }
+
+  .account-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .account-email {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--text-dim);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .account-panel-section {
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .account-panel-label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ember);
+    margin-bottom: 8px;
+  }
+
+  .account-panel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 132px;
+    overflow-y: auto;
+  }
+
+  .account-panel-list a {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: var(--r-xs);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+  }
+
+  .account-panel-list a:hover { background: rgba(255, 107, 26, 0.12); color: var(--text); }
+
+  .account-panel-empty {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .account-panel-foot { display: flex; flex-direction: column; padding: 8px; }
+
+  .account-panel-action {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: var(--r-xs);
+    background: transparent;
+    border: none;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+  }
+
+  .account-panel-action .auth-icon { display: block; width: 16px; height: 16px; flex-shrink: 0; }
+
+  .account-panel-action:hover { background: rgba(255, 107, 26, 0.1); color: var(--flame); }
+
+  .account-panel-logout:hover { color: #ff8a6a; }
+
+  @media (max-width: 720px) {
+    .account-trigger { padding: 4px; }
+    .account-panel { right: -4px; }
   }
 
   .social-links { display: flex; align-items: center; gap: 16px; }
@@ -2002,7 +2162,8 @@
     /* as thumbs se centram via translateX(-50%) dentro do keyframe —
        ao matar a animação é preciso reaplicar a transform estática */
     .hero-thumb { animation: none; transform: translateX(-50%) rotate(var(--rot, 0deg)); }
-    .card, .btn, .filter-pill, .logo-badge, .card-cover, .card-lock, .auth-input, .footer-links a, .social-links a {
+    .card, .btn, .filter-pill, .logo-badge, .card-cover, .card-lock, .auth-input, .footer-links a, .social-links a,
+    .account-trigger, .account-panel, .account-panel-list a, .account-panel-action {
       transition: none;
     }
     .card:hover { transform: none; }
@@ -2010,4 +2171,5 @@
     .btn-primary:hover, .btn-ghost:hover, .btn-google:hover, .filter-pill:hover, .link-item:hover { transform: none; }
     .btn-primary::before { display: none; }
     .logo:hover .logo-badge { transform: none; }
+    .account-panel { transform: none; }
   }
