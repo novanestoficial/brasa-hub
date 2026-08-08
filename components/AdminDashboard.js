@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import HourlyChart from "./HourlyChart";
 import AdminScriptForm from "./AdminScriptForm";
 import AdminScriptList from "./AdminScriptList";
@@ -49,6 +49,91 @@ const TABS = [
   },
 ];
 
+function NavButton({ tab, active, variant, onSelect }) {
+  return (
+    <button
+      type="button"
+      data-tab-id={tab.id}
+      className={`admin-sidebar-item${active === tab.id ? " is-active" : ""}`}
+      onClick={() => onSelect(tab.id)}
+      aria-current={active === tab.id ? "page" : undefined}
+    >
+      <span className="admin-sidebar-icon">{tab.icon}</span>
+      {variant === "header" ? tab.shortLabel : tab.label}
+    </button>
+  );
+}
+
+// indicador líquido: mede a posição do botão ativo e anima até lá esticando
+// (a "ponta fina") no meio do caminho antes de reformar no destino
+function AdminHeaderNav({ active, onSelect }) {
+  const navRef = useRef(null);
+  const indicatorRef = useRef(null);
+  const prevRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const nav = navRef.current;
+    const indicator = indicatorRef.current;
+    if (!nav || !indicator) return;
+
+    function measure() {
+      const btn = nav.querySelector(`[data-tab-id="${active}"]`);
+      if (!btn) return null;
+      const navRect = nav.getBoundingClientRect();
+      const btnRect = btn.getBoundingClientRect();
+      return { left: btnRect.left - navRect.left, width: btnRect.width };
+    }
+
+    const target = measure();
+    if (!target) return;
+    const prev = prevRef.current;
+
+    const reduceMotion =
+      typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!prev || reduceMotion) {
+      indicator.style.left = `${target.left}px`;
+      indicator.style.width = `${target.width}px`;
+    } else if (prev.left !== target.left || prev.width !== target.width) {
+      const midLeft = Math.min(prev.left, target.left);
+      const midWidth = Math.max(prev.left + prev.width, target.left + target.width) - midLeft;
+
+      indicator.animate(
+        [
+          { left: `${prev.left}px`, width: `${prev.width}px`, top: "3px", bottom: "3px" },
+          { left: `${midLeft}px`, width: `${midWidth}px`, top: "10px", bottom: "10px", offset: 0.55 },
+          { left: `${target.left}px`, width: `${target.width}px`, top: "3px", bottom: "3px" },
+        ],
+        { duration: 480, easing: "cubic-bezier(0.65, 0, 0.35, 1)", fill: "forwards" }
+      );
+      indicator.style.left = `${target.left}px`;
+      indicator.style.width = `${target.width}px`;
+    }
+
+    prevRef.current = target;
+
+    function handleResize() {
+      const r = measure();
+      if (!r) return;
+      indicator.style.left = `${r.left}px`;
+      indicator.style.width = `${r.width}px`;
+      prevRef.current = r;
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [active]);
+
+  return (
+    <nav className="admin-header-nav" ref={navRef} aria-label="Seções do admin">
+      <span className="admin-nav-indicator" ref={indicatorRef} aria-hidden="true" />
+      {TABS.map((tab) => (
+        <NavButton key={tab.id} tab={tab} active={active} variant="header" onSelect={onSelect} />
+      ))}
+    </nav>
+  );
+}
+
 export default function AdminDashboard({
   totalVisits,
   totalUsers,
@@ -72,21 +157,6 @@ export default function AdminDashboard({
 }) {
   const [active, setActive] = useState("stats");
 
-  function renderNavItems(variant) {
-    return TABS.map((tab) => (
-      <button
-        key={tab.id}
-        type="button"
-        className={`admin-sidebar-item${active === tab.id ? " is-active" : ""}`}
-        onClick={() => setActive(tab.id)}
-        aria-current={active === tab.id ? "page" : undefined}
-      >
-        <span className="admin-sidebar-icon">{tab.icon}</span>
-        {variant === "header" ? tab.shortLabel : tab.label}
-      </button>
-    ));
-  }
-
   return (
     <>
       <header className="site-header">
@@ -97,9 +167,7 @@ export default function AdminDashboard({
           <span className="logo-text">CHARMANDER<span className="logo-suffix"> SCRIPTS</span></span>
         </a>
 
-        <nav className="admin-header-nav" aria-label="Seções do admin">
-          {renderNavItems("header")}
-        </nav>
+        <AdminHeaderNav active={active} onSelect={setActive} />
 
         <a className="btn btn-ghost" href="/">
           <span className="back-full">&larr; Voltar ao site</span>
@@ -114,7 +182,9 @@ export default function AdminDashboard({
 
       <div className="admin-shell">
       <nav className="admin-mobile-nav" aria-label="Seções do admin (mobile)">
-        {renderNavItems("mobile")}
+        {TABS.map((tab) => (
+          <NavButton key={tab.id} tab={tab} active={active} variant="mobile" onSelect={setActive} />
+        ))}
       </nav>
 
       <div className="admin-content">

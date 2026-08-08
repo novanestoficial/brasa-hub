@@ -1,6 +1,6 @@
 const BAR_W = 8;
 const GAP = 2;
-const CHART_H = 60;
+const CHART_H = 42;
 const WIDTH = 24 * (BAR_W + GAP) - GAP;
 
 export default function HourlyChart({ buckets, unitLabel }) {
