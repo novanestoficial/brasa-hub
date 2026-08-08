@@ -1571,22 +1571,74 @@
   .stat-views { top: 10px; left: 10px; }
   .stat-likes { bottom: 10px; right: 10px; }
 
-  button.like-button {
+  /* like/favoritar fica fora da imagem, como uma ação de destaque própria */
+  .like-button-lg {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 10px;
+    margin: 18px auto 0;
+    padding: 12px 22px;
+    border-radius: var(--r-pill);
+    border: 1.5px solid var(--line-strong);
+    background: linear-gradient(150deg, var(--surface-2), var(--surface-1));
+    color: var(--text);
     cursor: pointer;
-    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    box-shadow: var(--sh-2);
+    transition:
+      transform var(--dur-2) var(--ease-out),
+      box-shadow var(--dur-2) var(--ease),
+      border-color var(--dur-1) var(--ease),
+      background var(--dur-1) var(--ease),
+      color var(--dur-1) var(--ease);
   }
 
-  button.like-button:hover:not(:disabled) {
-    background: rgba(255, 107, 26, 0.28);
+  .like-button-icon { font-size: 1.05rem; line-height: 1; }
+
+  .like-button-count {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .like-button-label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+  }
+
+  .like-button-lg:hover:not(:disabled) {
     border-color: var(--flame);
     transform: translateY(-2px);
+    box-shadow: var(--glow-sm);
   }
 
-  button.like-button.liked { color: var(--flame); border-color: var(--flame); }
-  button.like-button:disabled { cursor: default; }
+  .like-button-lg:hover:not(:disabled) .like-button-label { color: var(--text); }
+
+  .like-button-lg.liked {
+    border-color: var(--flame);
+    background: linear-gradient(135deg, var(--flame), var(--ember));
+    box-shadow: var(--glow-md);
+    animation: like-pop var(--dur-3) var(--ease-out);
+  }
+
+  .like-button-lg.liked .like-button-count,
+  .like-button-lg.liked .like-button-label { color: #1a0d05; }
+
+  .like-button-lg:disabled { cursor: default; }
+
+  @keyframes like-pop {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    button.like-button { transition: none; }
+    .like-button-lg { transition: none; animation: none; }
+    .like-button-lg:hover:not(:disabled) { transform: none; }
   }
 
   .code-block {

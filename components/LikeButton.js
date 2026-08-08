@@ -33,13 +33,15 @@ export default function LikeButton({ slug, initialLikes, initialLiked = false })
   return (
     <button
       type="button"
-      className={`stats-overlay stat-likes like-button${liked ? " liked" : ""}`}
+      className={`like-button-lg${liked ? " liked" : ""}`}
       onClick={handleClick}
       disabled={busy}
       aria-pressed={liked}
       aria-label={liked ? "Remover dos favoritos" : "Curtir e favoritar esse script"}
     >
-      👍 {likes}
+      <span className="like-button-icon" aria-hidden="true">👍</span>
+      <span className="like-button-count">{likes}</span>
+      <span className="like-button-label">{liked ? "Curtido" : "Curtir"}</span>
     </button>
   );
 }

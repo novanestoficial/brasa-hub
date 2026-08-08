@@ -106,8 +106,9 @@ export default async function ScriptDetailPage({ params }) {
               height="270"
             />
             <span className="stats-overlay stat-views">👁 {views}</span>
-            <LikeButton slug={slug} initialLikes={script.likes} initialLiked={liked} />
           </div>
+
+          <LikeButton slug={slug} initialLikes={script.likes} initialLiked={liked} />
 
           {hasAccess ? (
             <>
