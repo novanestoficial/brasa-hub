@@ -1849,7 +1849,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 16px;
-    margin: 32px 0 48px;
+    margin: 32px 0 24px;
   }
 
   .admin-stat-card {
@@ -1884,7 +1884,7 @@
      com a mesma linguagem de destaque (brasa + painel) usada na oferta */
   .admin-today-panel {
     position: relative;
-    margin: 44px 0 48px;
+    margin: 0 0 24px;
     padding: clamp(20px, 3vw, 28px) clamp(18px, 3vw, 26px);
     border-radius: var(--r-lg);
     border: 1px solid var(--line-strong);
@@ -2032,7 +2032,7 @@
     .admin-today-chart-pop { transition: none; }
   }
 
-  .admin-section { margin-bottom: 48px; }
+  .admin-section { margin-bottom: 24px; }
 
   .admin-section h2 {
     font-family: var(--font-display);
