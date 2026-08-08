@@ -1880,6 +1880,87 @@
 
   .admin-stat-value-sm { font-size: 1.15rem; word-break: break-word; }
 
+  /* painel à parte pros números "agora": separado do grid frio de totais,
+     com a mesma linguagem de destaque (brasa + painel) usada na oferta */
+  .admin-today-panel {
+    position: relative;
+    margin: 44px 0 48px;
+    padding: clamp(20px, 3vw, 28px) clamp(18px, 3vw, 26px);
+    border-radius: var(--r-lg);
+    border: 1px solid var(--line-strong);
+    background:
+      radial-gradient(ellipse 80% 100% at 50% 0%, rgba(255, 107, 26, 0.14), transparent 70%),
+      linear-gradient(165deg, var(--surface-2), var(--surface-1) 60%, #1e1209 100%);
+    box-shadow: var(--sh-2);
+  }
+
+  .admin-today-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 20px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--flame);
+  }
+
+  .admin-today-heading::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--ember);
+    box-shadow: 0 0 8px 2px rgba(255, 107, 26, 0.8);
+  }
+
+  .admin-today-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+  }
+
+  .admin-today-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 18px;
+    border-radius: var(--r-md);
+    border: 1px solid var(--line);
+    background: rgba(255, 107, 26, 0.05);
+  }
+
+  .admin-today-period {
+    align-self: flex-start;
+    margin-bottom: 4px;
+    padding: 3px 10px;
+    border-radius: var(--r-pill);
+    background: linear-gradient(135deg, var(--flame), var(--ember));
+    color: #1a0d05;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .admin-today-value {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 2.1rem;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .admin-today-label {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--text-dim);
+  }
+
   .admin-section { margin-bottom: 48px; }
 
   .admin-section h2 {

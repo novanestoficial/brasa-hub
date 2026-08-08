@@ -108,22 +108,6 @@ export default async function AdminPage() {
             <span className="admin-stat-value">{totalLikes}</span>
           </div>
           <div className="admin-stat-card">
-            <span className="admin-stat-label">Visitas hoje</span>
-            <span className="admin-stat-value">{visitsToday ?? 0}</span>
-          </div>
-          <div className="admin-stat-card">
-            <span className="admin-stat-label">Visitas na semana</span>
-            <span className="admin-stat-value">{visitsWeek ?? 0}</span>
-          </div>
-          <div className="admin-stat-card">
-            <span className="admin-stat-label">Cliques em scripts hoje</span>
-            <span className="admin-stat-value">{scriptViewsToday ?? 0}</span>
-          </div>
-          <div className="admin-stat-card">
-            <span className="admin-stat-label">Cliques em scripts na semana</span>
-            <span className="admin-stat-value">{scriptViewsWeek ?? 0}</span>
-          </div>
-          <div className="admin-stat-card">
             <span className="admin-stat-label">Taxa de conversão</span>
             <span className="admin-stat-value">{conversionRate}%</span>
           </div>
@@ -133,6 +117,32 @@ export default async function AdminPage() {
               <span className="admin-stat-value admin-stat-value-sm">{mostLiked.name}</span>
             </div>
           )}
+        </div>
+
+        <div className="admin-today-panel">
+          <p className="admin-today-heading">Hoje &amp; essa semana</p>
+          <div className="admin-today-grid">
+            <div className="admin-today-card">
+              <span className="admin-today-period">Hoje</span>
+              <span className="admin-today-value">{visitsToday ?? 0}</span>
+              <span className="admin-today-label">Visitas</span>
+            </div>
+            <div className="admin-today-card">
+              <span className="admin-today-period">Semana</span>
+              <span className="admin-today-value">{visitsWeek ?? 0}</span>
+              <span className="admin-today-label">Visitas</span>
+            </div>
+            <div className="admin-today-card">
+              <span className="admin-today-period">Hoje</span>
+              <span className="admin-today-value">{scriptViewsToday ?? 0}</span>
+              <span className="admin-today-label">Cliques em scripts</span>
+            </div>
+            <div className="admin-today-card">
+              <span className="admin-today-period">Semana</span>
+              <span className="admin-today-value">{scriptViewsWeek ?? 0}</span>
+              <span className="admin-today-label">Cliques em scripts</span>
+            </div>
+          </div>
         </div>
 
         <section className="admin-section">
