@@ -2081,30 +2081,512 @@
     color: var(--text-dim);
   }
 
-  /* ---------- admin: form de cadastro de script ---------- */
-  .admin-script-form { max-width: 560px; margin-top: 0; }
+  /* ---------- admin: form de cadastro de script ----------
+     dois painéis lado a lado com papéis opostos: o form é superfície elevada
+     (onde se digita) e o preview é superfície rebaixada (mesa de prova onde o
+     card real aparece ao vivo). as regras abaixo são escopadas em
+     .admin-script-editor / .admin-script-form de propósito: .auth-form e
+     .auth-input são declarados depois neste arquivo e ganhariam no empate. */
+  .admin-script-editor {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(276px, 30%, 320px);
+    gap: clamp(20px, 2.6vw, 32px);
+    align-items: start;
+  }
 
-  .admin-form-textarea { resize: vertical; min-height: 78px; font-family: var(--font-body); }
+  .admin-script-editor .admin-script-form {
+    position: relative;
+    max-width: none;
+    margin-top: 0;
+    gap: 18px;
+    border-color: var(--line-strong);
+    background:
+      radial-gradient(ellipse 90% 60% at 50% 0%, rgba(255, 107, 26, 0.1), transparent 70%),
+      linear-gradient(165deg, var(--surface-1), #1e1209 100%);
+    box-shadow: var(--sh-2), inset 0 1px 0 rgba(255, 220, 180, 0.07);
+  }
 
-  .admin-form-mono { font-family: var(--font-mono); font-size: 0.85rem; }
+  /* fio quente no topo: mesma assinatura dos painéis de destaque do site */
+  .admin-script-editor .admin-script-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 14%;
+    right: 14%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--flame), transparent);
+  }
 
-  .admin-form-toggles { display: flex; flex-wrap: wrap; gap: 22px; }
+  .admin-script-form .admin-form-textarea {
+    resize: vertical;
+    min-height: 86px;
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
 
-  .admin-form-toggle {
+  /* o loadstring é código, então o campo se veste de código: rebaixado, mono e
+     na mesma cor que o .code-block usa na página do script */
+  .admin-script-form .admin-form-mono {
+    min-height: 74px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--flame);
+    background: rgba(12, 7, 3, 0.72);
+    border-color: rgba(255, 107, 26, 0.3);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    /* loadstring é uma linha só e comprida: quebra em vez de rolar na horizontal,
+       senão só dá pra ver um pedaço do que foi colado */
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    tab-size: 2;
+  }
+
+  .admin-script-form .admin-form-mono::placeholder { color: rgba(255, 179, 71, 0.36); }
+
+  .admin-script-form .admin-form-mono:hover { border-color: rgba(255, 107, 26, 0.45); }
+
+  .admin-script-form .admin-form-mono:focus {
+    border-color: var(--flame);
+    background: rgba(12, 7, 3, 0.9);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(255, 107, 26, 0.18);
+  }
+
+  /* mensagem de sucesso dentro do form é um aviso inline, não um painel */
+  .admin-script-form .auth-success {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    padding: 11px 13px;
+    border-radius: var(--r-sm);
+    border-color: var(--line-strong);
+    background: rgba(255, 107, 26, 0.1);
+    box-shadow: none;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--text);
+  }
+
+  .admin-script-form .auth-success::before {
+    content: '✓';
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(140deg, var(--flame), var(--ember));
+    color: #1a0d05;
+    font-size: 0.66rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .admin-script-form .auth-submit { margin-top: 2px; }
+
+  /* ---------- checkbox custom (pago / key) ----------
+     o alvo clicável é o chip inteiro; a caixinha arredondada carrega o estado */
+  .admin-form-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 2px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .admin-toggle-chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px 9px 11px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--line);
+    background: rgba(24, 15, 8, 0.55);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.2;
+    color: var(--text-dim);
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      border-color var(--dur-1) var(--ease),
+      background var(--dur-1) var(--ease),
+      color var(--dur-1) var(--ease),
+      box-shadow var(--dur-2) var(--ease),
+      transform var(--dur-1) var(--ease);
+  }
+
+  .admin-toggle-chip:hover {
+    border-color: rgba(255, 107, 26, 0.42);
+    background: rgba(255, 107, 26, 0.07);
+    color: var(--text);
+  }
+
+  .admin-toggle-chip:active { transform: translateY(1px); }
+
+  /* o chip inteiro acende quando marcado; sem :has() a caixinha ainda diz tudo */
+  .admin-toggle-chip:has(.admin-toggle-input:checked) {
+    border-color: var(--line-strong);
+    background: rgba(255, 107, 26, 0.12);
+    color: var(--text);
+    box-shadow: var(--glow-sm);
+  }
+
+  .admin-toggle-chip:has(.admin-toggle-input:focus-visible) { border-color: var(--flame); }
+
+  .admin-toggle-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .admin-toggle-box {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1.5px solid var(--line-strong);
+    background: rgba(12, 7, 3, 0.7);
+    color: transparent;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.55);
+    transition:
+      background var(--dur-2) var(--ease),
+      border-color var(--dur-1) var(--ease),
+      color var(--dur-1) var(--ease),
+      box-shadow var(--dur-2) var(--ease);
+  }
+
+  .admin-toggle-chip:hover .admin-toggle-box { border-color: var(--flame); }
+
+  .admin-toggle-box svg { display: block; width: 14px; height: 14px; }
+
+  /* o check é desenhado, não aparece de uma vez */
+  .admin-toggle-box svg path {
+    stroke-dasharray: 22;
+    stroke-dashoffset: 22;
+    transition: stroke-dashoffset var(--dur-2) var(--ease-out) 0.05s;
+  }
+
+  /* anel que dispara pra fora no momento do clique */
+  .admin-toggle-box::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 12px;
+    border: 1.5px solid var(--flame);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .admin-toggle-input:checked ~ .admin-toggle-box {
+    border-color: var(--flame);
+    background: linear-gradient(140deg, var(--flame), var(--ember));
+    color: #1a0d05;
+    box-shadow: 0 3px 12px -4px rgba(255, 107, 26, 0.95), inset 0 1px 0 rgba(255, 235, 210, 0.45);
+    animation: admin-toggle-pop var(--dur-3) var(--ease-out);
+  }
+
+  .admin-toggle-input:checked ~ .admin-toggle-box svg path { stroke-dashoffset: 0; }
+
+  .admin-toggle-input:checked ~ .admin-toggle-box::after { animation: admin-toggle-ring var(--dur-3) var(--ease-out); }
+
+  .admin-toggle-input:focus-visible ~ .admin-toggle-box {
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.55), 0 0 0 3px rgba(255, 107, 26, 0.32);
+  }
+
+  .admin-toggle-input:checked:focus-visible ~ .admin-toggle-box {
+    box-shadow: 0 3px 12px -4px rgba(255, 107, 26, 0.95), 0 0 0 3px rgba(255, 107, 26, 0.32);
+  }
+
+  .admin-toggle-label { flex-shrink: 0; }
+
+  @keyframes admin-toggle-pop {
+    0% { transform: scale(0.8); }
+    45% { transform: scale(1.14); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes admin-toggle-ring {
+    0% { opacity: 0.75; transform: scale(0.7); }
+    100% { opacity: 0; transform: scale(1.3); }
+  }
+
+  /* ---------- dropzone de imagem ---------- */
+  .image-dropzone {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 146px;
+    border-radius: var(--r-md);
+    border: 1.5px dashed rgba(255, 107, 26, 0.34);
+    background:
+      radial-gradient(ellipse 70% 90% at 50% 0%, rgba(255, 107, 26, 0.07), transparent 72%),
+      rgba(12, 7, 3, 0.5);
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    transition:
+      border-color var(--dur-2) var(--ease),
+      background var(--dur-2) var(--ease),
+      box-shadow var(--dur-2) var(--ease);
+  }
+
+  .image-dropzone:hover {
+    border-color: var(--line-strong);
+    background:
+      radial-gradient(ellipse 70% 90% at 50% 0%, rgba(255, 107, 26, 0.14), transparent 72%),
+      rgba(12, 7, 3, 0.5);
+  }
+
+  .image-dropzone:focus-visible {
+    border-color: var(--flame);
+    box-shadow: 0 0 0 3px rgba(255, 107, 26, 0.28);
+  }
+
+  /* com imagem escolhida o campo deixa de ser um vazio a preencher:
+     borda sólida, sem tracejado, e a capa ocupa o quadro inteiro */
+  .image-dropzone.has-image {
+    min-height: 0;
+    border-style: solid;
+    border-color: var(--line);
+    background: var(--bg);
+  }
+
+  .image-dropzone.has-image:hover { border-color: var(--line-strong); }
+
+  /* arrastando por cima: o alvo acende e respira, pra ficar claro onde soltar */
+  .image-dropzone.is-dragover,
+  .image-dropzone.has-image.is-dragover {
+    border-style: dashed;
+    border-color: var(--flame);
+    background:
+      radial-gradient(ellipse 70% 90% at 50% 50%, rgba(255, 107, 26, 0.22), transparent 70%),
+      rgba(12, 7, 3, 0.5);
+    animation: dropzone-breathe 1.5s var(--ease) infinite;
+  }
+
+  @keyframes dropzone-breathe {
+    0%, 100% { box-shadow: var(--glow-md), 0 0 0 3px rgba(255, 107, 26, 0.14); }
+    50% { box-shadow: var(--glow-md), 0 0 0 9px rgba(255, 107, 26, 0.05); }
+  }
+
+  .image-dropzone-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+  .image-dropzone-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  /* ícone dentro de um disco quente: mesma linguagem do check da oferta */
+  .image-dropzone-icon {
+    width: 46px;
+    height: 46px;
+    padding: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: rgba(255, 107, 26, 0.1);
+    color: var(--flame);
+    transition:
+      transform var(--dur-2) var(--ease-out),
+      background var(--dur-2) var(--ease),
+      border-color var(--dur-2) var(--ease),
+      box-shadow var(--dur-2) var(--ease);
+  }
+
+  .image-dropzone:hover .image-dropzone-icon {
+    transform: translateY(-2px);
+    background: rgba(255, 107, 26, 0.18);
+    box-shadow: 0 10px 22px -12px rgba(255, 107, 26, 0.95);
+  }
+
+  .image-dropzone.is-dragover .image-dropzone-icon {
+    border-color: var(--flame);
+    background: linear-gradient(140deg, var(--flame), var(--ember));
+    color: #1a0d05;
+    animation: dropzone-icon-bob 0.9s var(--ease) infinite;
+  }
+
+  @keyframes dropzone-icon-bob {
+    0%, 100% { transform: translateY(-1px); }
+    50% { transform: translateY(-7px); }
+  }
+
+  .image-dropzone-text {
+    margin: 0;
+    max-width: 24ch;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+    transition: color var(--dur-1) var(--ease);
+  }
+
+  .image-dropzone:hover .image-dropzone-text { color: var(--text); }
+
+  .image-dropzone-filled {
+    position: relative;
+    width: 100%;
+    height: 168px;
+    overflow: hidden;
+  }
+
+  .image-dropzone-thumb {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    filter: saturate(1.02) brightness(0.94);
+    transition: transform var(--dur-3) var(--ease-out), filter var(--dur-2) var(--ease);
+  }
+
+  .image-dropzone:hover .image-dropzone-thumb,
+  .image-dropzone:focus-visible .image-dropzone-thumb {
+    transform: scale(1.05);
+    filter: saturate(1.1) brightness(0.6);
+  }
+
+  .image-dropzone-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(180deg, rgba(24, 15, 8, 0.12), rgba(24, 15, 8, 0.5));
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    opacity: 0;
+    transition: opacity var(--dur-2) var(--ease);
+  }
+
+  .image-dropzone:hover .image-dropzone-overlay,
+  .image-dropzone:focus-visible .image-dropzone-overlay { opacity: 1; }
+
+  /* o "trocar imagem" se comporta como botão em cima da capa */
+  .image-dropzone-overlay span {
+    padding: 7px 14px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--line-strong);
+    background: rgba(24, 15, 8, 0.78);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: var(--sh-1);
+  }
+
+  .image-dropzone-icon-sm {
+    width: 22px;
+    height: 22px;
+    color: var(--flame);
+    transform: translateY(5px);
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+
+  .image-dropzone:hover .image-dropzone-icon-sm,
+  .image-dropzone:focus-visible .image-dropzone-icon-sm { transform: translateY(0); }
+
+  /* ---------- preview do card, ao vivo ---------- */
+  .admin-script-preview {
+    position: sticky;
+    top: 90px;
+    padding: 15px 15px 19px;
+    border-radius: var(--r-lg);
+    border: 1px solid var(--line);
+    /* hachura fina + fundo rebaixado: lê como mesa de prova, não como conteúdo */
+    background:
+      repeating-linear-gradient(135deg, rgba(255, 107, 26, 0.045) 0 1px, transparent 1px 9px),
+      linear-gradient(180deg, rgba(12, 7, 3, 0.6), rgba(24, 15, 8, 0.25));
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .admin-script-preview-label {
     display: flex;
     align-items: center;
     gap: 8px;
+    margin: 0 0 12px;
+    padding-left: 2px;
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
     color: var(--text-dim);
-    cursor: pointer;
   }
 
-  .admin-form-toggle input[type="checkbox"] {
-    width: 17px;
-    height: 17px;
-    accent-color: var(--flame);
-    cursor: pointer;
+  /* pontinho vivo: mesma marca de "tempo real" do painel de hoje */
+  .admin-script-preview-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--ember);
+    box-shadow: 0 0 8px 2px rgba(255, 107, 26, 0.8);
+    animation: ember-pulse 2.6s var(--ease) infinite;
+  }
+
+  /* o card do preview não tem descrição/link, então não faz sentido esticar
+     ele até a altura mínima do catálogo — vira um buraco vazio */
+  .admin-script-preview .card { min-height: 0; }
+
+  .card-cover-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 8;
+    color: rgba(255, 179, 71, 0.5);
+    background:
+      repeating-linear-gradient(135deg, rgba(255, 107, 26, 0.05) 0 1px, transparent 1px 10px),
+      linear-gradient(155deg, var(--surface-1), var(--surface-2));
+  }
+
+  .card-cover-placeholder svg { width: 34px; height: 34px; }
+
+  @media (max-width: 860px) {
+    .admin-script-editor { grid-template-columns: 1fr; gap: 20px; }
+    .admin-script-preview { position: static; max-width: 340px; }
+  }
+
+  @media (max-width: 520px) {
+    .admin-toggle-chip { flex: 1 1 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .admin-toggle-chip,
+    .admin-toggle-box,
+    .admin-toggle-box svg path,
+    .image-dropzone,
+    .image-dropzone-icon,
+    .image-dropzone-icon-sm,
+    .image-dropzone-thumb,
+    .image-dropzone-overlay { transition: none; }
+    .admin-toggle-chip:active { transform: none; }
+    .admin-toggle-input:checked ~ .admin-toggle-box,
+    .admin-toggle-input:checked ~ .admin-toggle-box::after { animation: none; }
+    .image-dropzone.is-dragover { animation: none; box-shadow: var(--glow-md), 0 0 0 3px rgba(255, 107, 26, 0.14); }
+    .image-dropzone.is-dragover .image-dropzone-icon { animation: none; }
+    .image-dropzone:hover .image-dropzone-icon { transform: none; }
+    .image-dropzone:hover .image-dropzone-thumb,
+    .image-dropzone:focus-visible .image-dropzone-thumb { transform: none; }
+    .image-dropzone:hover .image-dropzone-icon-sm,
+    .image-dropzone:focus-visible .image-dropzone-icon-sm { transform: none; }
+    .admin-script-preview-label::before { animation: none; }
   }
 
   /* ---------- paywall ---------- */
