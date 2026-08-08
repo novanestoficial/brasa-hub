@@ -8,6 +8,7 @@ const FILTERS = [
   { filter: "desastre", label: "Desastre", featured: false },
   { filter: "universal", label: "Universal", featured: false },
   { filter: "blox-fruits", label: "Blox Fruits", featured: false },
+  { filter: "grow-a-garden-2", label: "Grow a Garden 2", featured: false },
   { filter: "gravar", label: "🎥 Scripts que uso pra gravar", featured: true },
 ];
 
