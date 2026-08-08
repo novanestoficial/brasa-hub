@@ -1843,7 +1843,82 @@
   .btn-primary.copied { background: linear-gradient(140deg, var(--flame), var(--flame)); color: #1a0d05; }
 
   /* ---------- admin ---------- */
-  .admin-wrap { max-width: 1000px; padding-top: 64px; padding-bottom: 96px; }
+  .admin-wrap { max-width: 1120px; padding-top: 64px; padding-bottom: 96px; }
+
+  /* ---------- admin: shell com menu lateral ---------- */
+  .admin-shell {
+    display: grid;
+    grid-template-columns: 216px minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+    margin-top: 32px;
+  }
+
+  .admin-sidebar {
+    position: sticky;
+    top: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: linear-gradient(155deg, var(--surface-1), var(--surface-2));
+    box-shadow: var(--sh-1);
+  }
+
+  .admin-sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r-sm);
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+  }
+
+  .admin-sidebar-icon { display: flex; width: 17px; height: 17px; flex-shrink: 0; }
+  .admin-sidebar-icon svg { width: 100%; height: 100%; }
+
+  .admin-sidebar-item:hover { background: rgba(255, 107, 26, 0.09); color: var(--text); }
+
+  .admin-sidebar-item.is-active {
+    background: linear-gradient(135deg, var(--flame), var(--ember));
+    color: #1a0d05;
+    font-weight: 700;
+    box-shadow: var(--glow-sm);
+  }
+
+  .admin-content { min-width: 0; }
+
+  .admin-tab-panel { animation: admin-tab-in 0.25s var(--ease-out); }
+
+  @keyframes admin-tab-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 860px) {
+    .admin-shell { grid-template-columns: 1fr; gap: 18px; }
+    .admin-sidebar {
+      position: static;
+      flex-direction: row;
+      overflow-x: auto;
+      gap: 6px;
+    }
+    .admin-sidebar-item { white-space: nowrap; flex-shrink: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .admin-sidebar-item { transition: none; }
+    .admin-tab-panel { animation: none; }
+  }
 
   .admin-stats-grid {
     display: grid;

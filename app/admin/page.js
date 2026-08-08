@@ -2,9 +2,7 @@ import { notFound } from "next/navigation";
 import { getSupabaseServerClient } from "../../lib/supabase/server";
 import { getSupabaseAdminClient } from "../../lib/supabase/admin";
 import { ADMIN_EMAIL } from "../../lib/admin";
-import HourlyChart from "../../components/HourlyChart";
-import AdminScriptForm from "../../components/AdminScriptForm";
-import AdminScriptList from "../../components/AdminScriptList";
+import AdminDashboard from "../../components/AdminDashboard";
 
 export const metadata = {
   title: "Admin — CHARMANDER SCRIPTS",
@@ -99,140 +97,32 @@ export default async function AdminPage() {
       </header>
 
       <main>
-      <div className="wrap admin-wrap">
-        <p className="eyebrow">Admin</p>
-        <h1 className="detail-title">Painel</h1>
+        <div className="wrap admin-wrap">
+          <p className="eyebrow">Admin</p>
+          <h1 className="detail-title">Painel</h1>
 
-        <div className="admin-stats-grid">
-          <div className="admin-stat-card">
-            <span className="admin-stat-label">Visitas totais</span>
-            <span className="admin-stat-value">{totalVisits}</span>
-          </div>
-          <div className="admin-stat-card">
-            <span className="admin-stat-label">Usuários cadastrados</span>
-            <span className="admin-stat-value">{totalUsers}</span>
-          </div>
-          <div className="admin-stat-card">
-            <span className="admin-stat-label">Compras</span>
-            <span className="admin-stat-value">{totalPurchases}</span>
-          </div>
-          <div className="admin-stat-card">
-            <span className="admin-stat-label">Receita estimada</span>
-            <span className="admin-stat-value">R$ {estimatedRevenue}</span>
-          </div>
-          <div className="admin-stat-card">
-            <span className="admin-stat-label">Views nos scripts (total)</span>
-            <span className="admin-stat-value">{totalScriptViews}</span>
-          </div>
-          <div className="admin-stat-card">
-            <span className="admin-stat-label">Likes totais</span>
-            <span className="admin-stat-value">{totalLikes}</span>
-          </div>
-          <div className="admin-stat-card">
-            <span className="admin-stat-label">Taxa de conversão</span>
-            <span className="admin-stat-value">{conversionRate}%</span>
-          </div>
-          {mostLiked && (
-            <div className="admin-stat-card">
-              <span className="admin-stat-label">Mais curtido</span>
-              <span className="admin-stat-value admin-stat-value-sm">{mostLiked.name}</span>
-            </div>
-          )}
+          <AdminDashboard
+            totalVisits={totalVisits}
+            totalUsers={totalUsers}
+            totalPurchases={totalPurchases}
+            estimatedRevenue={estimatedRevenue}
+            totalScriptViews={totalScriptViews}
+            totalLikes={totalLikes}
+            conversionRate={conversionRate}
+            mostLiked={mostLiked}
+            visitsToday={visitsToday}
+            visitsWeek={visitsWeek}
+            scriptViewsToday={scriptViewsToday}
+            scriptViewsWeek={scriptViewsWeek}
+            visitsTodayHourly={visitsTodayHourly}
+            visitsWeekHourly={visitsWeekHourly}
+            scriptViewsTodayHourly={scriptViewsTodayHourly}
+            scriptViewsWeekHourly={scriptViewsWeekHourly}
+            scriptList={scriptList}
+            recentUsers={recentUsers}
+            existingCategories={existingCategories}
+          />
         </div>
-
-        <div className="admin-today-panel">
-          <p className="admin-today-heading">Hoje &amp; essa semana</p>
-          <div className="admin-today-grid">
-            <div className="admin-today-card">
-              <span className="admin-today-period">Hoje</span>
-              <span className="admin-today-value">{visitsToday ?? 0}</span>
-              <span className="admin-today-label">Visitas</span>
-              <HourlyChart buckets={visitsTodayHourly} unitLabel="visitas" />
-            </div>
-            <div className="admin-today-card">
-              <span className="admin-today-period">Semana</span>
-              <span className="admin-today-value">{visitsWeek ?? 0}</span>
-              <span className="admin-today-label">Visitas</span>
-              <HourlyChart buckets={visitsWeekHourly} unitLabel="visitas" />
-            </div>
-            <div className="admin-today-card">
-              <span className="admin-today-period">Hoje</span>
-              <span className="admin-today-value">{scriptViewsToday ?? 0}</span>
-              <span className="admin-today-label">Cliques em scripts</span>
-              <HourlyChart buckets={scriptViewsTodayHourly} unitLabel="cliques" />
-            </div>
-            <div className="admin-today-card">
-              <span className="admin-today-period">Semana</span>
-              <span className="admin-today-value">{scriptViewsWeek ?? 0}</span>
-              <span className="admin-today-label">Cliques em scripts</span>
-              <HourlyChart buckets={scriptViewsWeekHourly} unitLabel="cliques" />
-            </div>
-          </div>
-        </div>
-
-        <section className="admin-section">
-          <h2>Adicionar script</h2>
-          <AdminScriptForm existingCategories={existingCategories} />
-        </section>
-
-        <section className="admin-section admin-section-compact">
-          <h2>Gerenciar scripts</h2>
-          <AdminScriptList scripts={scriptList.map((s) => ({ slug: s.slug, name: s.name }))} />
-        </section>
-
-        <section className="admin-section">
-          <h2>Scripts mais vistos</h2>
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Script</th>
-                  <th>Views</th>
-                  <th>Likes</th>
-                  <th>Pago</th>
-                </tr>
-              </thead>
-              <tbody>
-                {scriptList.map((s) => (
-                  <tr key={s.slug}>
-                    <td>{s.name}</td>
-                    <td>{s.views}</td>
-                    <td>{s.likes}</td>
-                    <td>{s.is_paid ? "Sim" : "Não"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section className="admin-section">
-          <h2>Usuários cadastrados ({totalUsers})</h2>
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>E-mail</th>
-                  <th>Cadastro</th>
-                  <th>Provedor</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentUsers.map((u) => (
-                  <tr key={u.id}>
-                    <td>{u.email}</td>
-                    <td>{new Date(u.created_at).toLocaleDateString("pt-BR")}</td>
-                    <td>{u.app_metadata?.provider || "email"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {totalUsers > recentUsers.length && (
-            <p className="admin-note">Mostrando os 10 cadastros mais recentes de {totalUsers}.</p>
-          )}
-        </section>
-      </div>
       </main>
     </>
   );
