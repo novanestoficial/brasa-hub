@@ -3,6 +3,7 @@ import { getSupabaseServerClient } from "../../lib/supabase/server";
 import { getSupabaseAdminClient } from "../../lib/supabase/admin";
 import { ADMIN_EMAIL } from "../../lib/admin";
 import HourlyChart from "../../components/HourlyChart";
+import AdminScriptForm from "../../components/AdminScriptForm";
 
 export const metadata = {
   title: "Admin — CHARMANDER SCRIPTS",
@@ -166,6 +167,11 @@ export default async function AdminPage() {
             </div>
           </div>
         </div>
+
+        <section className="admin-section">
+          <h2>Adicionar script</h2>
+          <AdminScriptForm />
+        </section>
 
         <section className="admin-section">
           <h2>Scripts mais vistos</h2>

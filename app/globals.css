@@ -2081,6 +2081,32 @@
     color: var(--text-dim);
   }
 
+  /* ---------- admin: form de cadastro de script ---------- */
+  .admin-script-form { max-width: 560px; margin-top: 0; }
+
+  .admin-form-textarea { resize: vertical; min-height: 78px; font-family: var(--font-body); }
+
+  .admin-form-mono { font-family: var(--font-mono); font-size: 0.85rem; }
+
+  .admin-form-toggles { display: flex; flex-wrap: wrap; gap: 22px; }
+
+  .admin-form-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    cursor: pointer;
+  }
+
+  .admin-form-toggle input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--flame);
+    cursor: pointer;
+  }
+
   /* ---------- paywall ---------- */
   .paywall {
     position: relative;
