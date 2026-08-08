@@ -20,16 +20,28 @@ export default async function AdminPage() {
 
   const admin = getSupabaseAdminClient();
 
+  const now = new Date();
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+  const startOfWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
   const [
     { data: scripts },
     { data: siteStats },
     { data: usersResult },
     { count: purchaseCount },
+    { count: visitsToday },
+    { count: visitsWeek },
+    { count: scriptViewsToday },
+    { count: scriptViewsWeek },
   ] = await Promise.all([
     admin.from("scripts").select("*").order("views", { ascending: false }),
     admin.from("site_stats").select("total_visits").eq("id", 1).maybeSingle(),
     admin.auth.admin.listUsers({ perPage: 200 }),
     admin.from("purchases").select("*", { count: "exact", head: true }),
+    admin.from("visit_log").select("*", { count: "exact", head: true }).gte("created_at", startOfToday),
+    admin.from("visit_log").select("*", { count: "exact", head: true }).gte("created_at", startOfWeek),
+    admin.from("script_view_log").select("*", { count: "exact", head: true }).gte("created_at", startOfToday),
+    admin.from("script_view_log").select("*", { count: "exact", head: true }).gte("created_at", startOfWeek),
   ]);
 
   const totalVisits = siteStats?.total_visits ?? 0;
@@ -94,6 +106,22 @@ export default async function AdminPage() {
           <div className="admin-stat-card">
             <span className="admin-stat-label">Likes totais</span>
             <span className="admin-stat-value">{totalLikes}</span>
+          </div>
+          <div className="admin-stat-card">
+            <span className="admin-stat-label">Visitas hoje</span>
+            <span className="admin-stat-value">{visitsToday ?? 0}</span>
+          </div>
+          <div className="admin-stat-card">
+            <span className="admin-stat-label">Visitas na semana</span>
+            <span className="admin-stat-value">{visitsWeek ?? 0}</span>
+          </div>
+          <div className="admin-stat-card">
+            <span className="admin-stat-label">Cliques em scripts hoje</span>
+            <span className="admin-stat-value">{scriptViewsToday ?? 0}</span>
+          </div>
+          <div className="admin-stat-card">
+            <span className="admin-stat-label">Cliques em scripts na semana</span>
+            <span className="admin-stat-value">{scriptViewsWeek ?? 0}</span>
           </div>
           <div className="admin-stat-card">
             <span className="admin-stat-label">Taxa de conversão</span>
